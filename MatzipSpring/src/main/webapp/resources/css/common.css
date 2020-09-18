@@ -1,0 +1,157 @@
+@charset "UTF-8";
+
+ *{
+ 	font-family: 'Gamja Flower', cursive;
+ 	font-size: 25px;
+	}
+html, body{
+	padding: 0;
+	margin : 0;
+	width : 100%;
+	height : 100%;
+	
+}
+a{
+	color : black;
+	text-decoration: none;
+}
+.ml5 { margin-left: 5px; }
+.ml10 { margin-left: 10px; }
+.ml15 { margin-left: 15px; }
+#container{
+	display : flex;
+	flex-direction : column;
+	height:100%;
+	width:100%;
+}
+#container > header {
+	background-color: #ccccff;
+	display : flex;
+	height : 70px;
+	padding : 10px;
+	width : 100%;
+}
+#container > header > #headerLeft{
+	align-items: center;
+	display: flex;
+	flex-grow:1;
+}
+#container > header > #headerLeft > #headerLogout > a {
+	color: blue;
+}
+#container > header > #headerRight{
+	align-items : center;
+	display : flex;
+	flex-grow:1;
+	justify-content : flex-end;
+	padding-right: 50px;
+}
+#container > header > #headerRight > a{
+	font-size : 1.2em;
+}
+#container > section{
+	/* 남은 공간 비율 ( ex) 1 2 3일경우 각각 1/6 2/6 3/6 의 공간을 차지  */
+	flex-grow : 1;
+	
+}
+#container > footer{
+	align-items: center;
+	background-color: #636e72;
+	color : white;
+	display : flex;
+	height : 50px;
+	justify-content: center;
+	padding : 10px;
+
+}
+#sectionContainerCenter{
+	align-items: center;
+	background-image: url('img/background.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	display:flex;
+	height:100%;
+	justify-content: center; 
+	width:100%;
+	/* background-image: url('img/test.gif'); */
+}
+#sectionContainerCenter form{
+	text-align: center;
+}
+
+#sectionContainerCenter input {
+	 width: 380px; height: 50px; margin-bottom: 30px; border-radius : 20px;
+	 padding-left : 20px;
+}
+
+#sectionContainerCenter #user_id{
+	position: relative;
+}
+#sectionContainerCenter #id_btn{
+	border-radius : 20px;
+	font-size: small;
+	height : 50px;
+	margin-left : -100px;
+	position : absolute;
+	width :100px;
+}
+#sectionContainer{
+	background-color : rgba(0,0,0,0.1);
+}
+.frm {
+	
+	padding : 15px;
+}
+#idChkResult{
+	color : red;
+	animation-name : test22;
+	animation-duration : 3s;
+	animation-direction : normal;
+	animation-fill-mode : none;
+}
+
+@keyframes test22 {
+	from
+	{
+	margin-left : 200%;
+	width: 500%;
+	}
+	
+	to{
+	color : yellow;
+	margin-left:0%;
+	width: 100%;
+	}
+}
+#joinLogin{
+	width : 300px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.containerPImg {
+	border-radius: 50%;
+	display: inline-block;
+	height: 48px;	
+	width: 48px;
+    overflow: hidden;
+}
+.pImg {
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+#recItem{
+	border : 1px solid black;
+}
+#recItem > input {
+	width : 50px;	
+}
+#menu_btn, #menu_sub{ 
+	width : 150px;
+	height : 40px;
+}
+
+.cnt_hit, .cnt_facvorite{
+	color : blue;
+}

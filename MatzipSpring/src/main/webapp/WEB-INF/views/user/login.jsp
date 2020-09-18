@@ -5,7 +5,7 @@
 <div id="sectionContainerCenter">
 	<div>
 		<div id="msg">${msg }</div>
-		<form class="frm" action="/user/loginProc" method="post">
+		<form class="frm" action="/user/login" method="post">
 			<div>
 				<input type="text" name="user_id" placeholder="아이디">
 			</div>

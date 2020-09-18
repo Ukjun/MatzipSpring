@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.koreait.matzip.user.UserMapper">
+	<insert id="insUser" parameterType="UserVO">
+	<!-- DAO에 쓰던 내용을 사용 -->
+		insert into t_user
+		(user_id, user_pw,salt, nm)
+		values 
+		(#{user_id}, #{user_pw}, #{salt}, #{nm})
+	</insert>
+	
+	<select id="selUser" parameterType="UserVO" resultType="UserDMI">
+		select i_user, user_id, user_pw, salt, nm, profile_img, r_dt
+		from t_user
+		where <if test="i_user>0"> i_user=#{i_user}</if>
+		<if test="user_id != null and user_id != ''">user_id=#{user_id}</if>
+	</select>
+</mapper>

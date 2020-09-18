@@ -3,7 +3,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <div id="sectionContainerCenter">
 	<div id="sectionContainer">
-		<form id="frm" class="frm" action="/user/joinProc" method="post">
+	<div class="error">${msg }</div>
+		<form id="frm" class="frm" action="/user/join" method="post">
 			<div id="idChkResult"></div>
 			<div><input type="text" name="user_id" id="user_id" placeholder="아이디">
 				<button type="button" id="id_btn" onclick="chkId()">아이디 중복체크</button>
