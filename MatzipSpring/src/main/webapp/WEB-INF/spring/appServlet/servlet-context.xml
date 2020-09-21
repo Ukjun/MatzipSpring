@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+	<context:property-placeholder location="classpath:config.properties"/>
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
@@ -30,14 +30,14 @@
 	<beans:bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<beans:property name="poolName" value="springHikaiCP"/>
 	<beans:property name="connectionTestQuery" value="select 1 from dual"/>
-		<beans:property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<beans:property name="driverClassName" value="${db.driver}"/>
 		<beans:property name="maximumPoolSize" value="10"/>
 		<beans:property name="idleTimeout" value="5000"/>
 		
 		<!-- xml에서 &를 참조자로 인식하기 때문에 발생한 Error.. 출처: https://civan.tistory.com/31 [행복만땅 개발자] -->
-		<beans:property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/matzip?useUnicode=tzrue&amp;characterEncoding=UTF-8" />
-		<beans:property name="username" value="root"/>
-		<beans:property name="password" value="koreait2020"/>
+		<beans:property name="jdbcUrl" value="${db.url}" />
+		<beans:property name="username" value="${db.username}"/>
+		<beans:property name="password" value="${db.password}"/>
 	
 	</beans:bean>
 	

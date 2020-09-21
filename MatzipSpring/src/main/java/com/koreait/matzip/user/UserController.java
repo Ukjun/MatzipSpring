@@ -51,11 +51,19 @@ public class UserController {
 		System.out.println("pw: " + param.getUser_pw());
 		int result = service.login(param);
 		System.out.println("login result:" + result);
-		if(result==1) {
+		if(result==Const.SUCCESS) {
 			hs.setAttribute(Const.LOGIN_USER, param);
 			return "redirect:/restaurant/map";
 		}
-		ra.addAttribute("param", param);
+		String msg =  null;
+		if(result == Const.NO_ID) {
+			msg="Id Check!!";
+		} else if(result == Const.NO_PW) {
+			msg="Pw Check!!";
+		}
+		param.setMsg(msg);
+		// session에 박히고 세션이 끝나면 지워진다
+		ra.addFlashAttribute("data", param);
 		return "redirect:/user/login";
 	}
 	
@@ -77,12 +85,14 @@ public class UserController {
 	
 	// Proc에 하던 기능 (무조건 POST형식으로 보내야한다)
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String join(UserVO param) {
+	public String join(UserVO param, RedirectAttributes ra) {
 		int result = service.join(param);
 		System.out.println("join result: " + result);
 		if(result==1) {
 			return "redirect:/user/login";
 		}
+		ra.addFlashAttribute("err", result);
+		
 		return "redirect:/user/join?err=" + result;
 	}
 }

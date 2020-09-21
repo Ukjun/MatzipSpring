@@ -4,10 +4,10 @@
 
 <div id="sectionContainerCenter">
 	<div>
-		<div id="msg">${msg }</div>
+		<div id="msg">${data.msg }</div>
 		<form class="frm" action="/user/login" method="post">
 			<div>
-				<input type="text" name="user_id" placeholder="아이디">
+				<input type="text" name="user_id" placeholder="아이디" value="${data.user_id }">
 			</div>
 			<div>
 				<input type="password" name="user_pw" placeholder="비밀번호">
@@ -20,7 +20,7 @@
 	</div>
 </div>
 <script>
-console.log(`${msg}`)
+console.log(`${data.msg}`)
 	function moveToJoin(){
 		location.href = "/user/join"
 	}
