@@ -20,6 +20,7 @@
 	</div>
 </div>
 <script>
+console.log(`${msg}`)
 	function moveToJoin(){
 		location.href = "/user/join"
 	}

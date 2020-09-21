@@ -12,7 +12,7 @@
 		(#{user_id}, #{user_pw}, #{salt}, #{nm})
 	</insert>
 	
-	<select id="selUser" parameterType="UserVO" resultType="UserDMI">
+	<select id="selUser" parameterType="UserParam" resultType="UserDMI">
 		select i_user, user_id, user_pw, salt, nm, profile_img, r_dt
 		from t_user
 		where <if test="i_user>0"> i_user=#{i_user}</if>

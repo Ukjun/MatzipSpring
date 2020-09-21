@@ -6,5 +6,6 @@
 	<typeAliases>
 		<typeAlias type="com.koreait.matzip.user.model.UserVO" alias="UserVO"/>
 		<typeAlias type="com.koreait.matzip.user.model.UserDMI" alias="UserDMI"/>
+		<typeAlias type="com.koreait.matzip.user.model.UserParam" alias="UserParam"/>
 	</typeAliases>
 </configuration>

@@ -1,15 +1,19 @@
 package com.koreait.matzip.user;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.koreait.matzip.Const;
 import com.koreait.matzip.ViewRef;
-import com.koreait.matzip.user.model.UserDTO;
+import com.koreait.matzip.user.model.UserParam;
 import com.koreait.matzip.user.model.UserVO;
 
 @Controller
@@ -26,16 +30,32 @@ public class UserController {
 		return ViewRef.TEMP_DEFAULT;
 	}
 	
+//	@RequestMapping(value = "/login", method = RequestMethod.POST)
+//	public String loginProc(UserDTO param, Model model /* HttpSession hs, RedirectAttributes ra*/) {
+//		System.out.println("id: " + param.getUser_id());
+//		System.out.println("pw: " + param.getUser_pw());
+//		int result = service.login(param);
+//		System.out.println("login result:" + result);
+//		if(result==1) {
+//			return "redirect:/restaurant/map";
+//		}
+//		else if (result ==2) {model.addAttribute("msg", "id check");}
+//		else {model.addAttribute("msg", "pw check");}
+//		model.addAttribute(Const.VIEW,"/user/login");
+//		return ViewRef.TEMP_DEFAULT;
+//	}
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginProc(UserDTO param) {
+	public String loginProc(UserParam param, HttpSession hs, RedirectAttributes ra) {
 		System.out.println("id: " + param.getUser_id());
 		System.out.println("pw: " + param.getUser_pw());
 		int result = service.login(param);
 		System.out.println("login result:" + result);
 		if(result==1) {
+			hs.setAttribute(Const.LOGIN_USER, param);
 			return "redirect:/restaurant/map";
 		}
-		
+		ra.addAttribute("param", param);
 		return "redirect:/user/login";
 	}
 	

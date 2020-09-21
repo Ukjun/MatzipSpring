@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.koreait.matzip.Const;
 import com.koreait.matzip.SecurityUtils;
 import com.koreait.matzip.user.model.UserDMI;
-import com.koreait.matzip.user.model.UserDTO;
+import com.koreait.matzip.user.model.UserParam;
 import com.koreait.matzip.user.model.UserVO;
 
 @Service
@@ -15,18 +15,21 @@ public class UserService {
 	private UserMapper mapper;
 	
 	// 1. 성공, 2. 아이디없음, 3.비번 틀림 
-	public int login(UserDTO param) {
+	// DTO : parameter / DMI : Select 
+	public int login(UserParam param) {
 		if(param.getUser_id().equals("")) {
 			return Const.NO_ID;
 		}
 		UserDMI dbUser = mapper.selUser(param);
+		if(dbUser == null) { return Const.NO_ID;};
 		System.out.println("db pw: " + dbUser.getUser_pw());
-		
-		String salt = dbUser.getSalt();
-		String encryPw = SecurityUtils.getEncrypt(param.getUser_pw(), salt);
+		String encryPw = SecurityUtils.getEncrypt(param.getUser_pw(), dbUser.getSalt());
 		System.out.println("encryPw:" + encryPw);
 		
 		if(encryPw.equals(dbUser.getUser_pw())) {
+			param.setUser_pw(null);
+			param.setNm(dbUser.getNm());
+			param.setProfile_img(dbUser.getProfile_img());
 			return Const.SUCCESS;
 		}else
 			return Const.NO_PW;	
