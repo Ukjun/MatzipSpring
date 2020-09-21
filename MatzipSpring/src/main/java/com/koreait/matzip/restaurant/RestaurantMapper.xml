@@ -4,6 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.koreait.matzip.restaurant.RestaurantMapper">
 	<select id="selRestList" parameterType="RestaurantParam" resultType="RestaurantDMI">
-	
+		SELECT i_rest, nm, lat, lng
+		FROM t_restaurant 
+		WHERE lat BETWEEN #{sw_lat} AND #{ne_lat}
+		AND lng BETWEEN #{sw_lng} AND #{ne_lng};
 	</select>
+	
+	<insert id="restInsert" parameterType="RestaurantVO">
+		insert into t_restaurant
+		(nm, addr, lat, lng, cd_category, i_user)
+		values
+		(#{nm}, #{addr}, #{lat}, #{lng}, 1, #{i_user})
+		
+	</insert>
 </mapper>
