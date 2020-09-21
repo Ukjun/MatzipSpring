@@ -7,5 +7,10 @@
 		<typeAlias type="com.koreait.matzip.user.model.UserVO" alias="UserVO"/>
 		<typeAlias type="com.koreait.matzip.user.model.UserDMI" alias="UserDMI"/>
 		<typeAlias type="com.koreait.matzip.user.model.UserParam" alias="UserParam"/>
+		
+		
+		<typeAlias type="com.koreait.matzip.restaurant.model.RestaurantVO" alias="RestaurantVO"/>
+		<typeAlias type="com.koreait.matzip.restaurant.model.RestaurantDMI" alias="RestaurantDMI"/>
+		<typeAlias type="com.koreait.matzip.restaurant.model.RestaurantParam" alias="RestaurantParam"/>
 	</typeAliases>
 </configuration>

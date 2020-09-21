@@ -21,12 +21,26 @@
 		      level: 5 //지도의 레벨(확대, 축소 정도)
 		   };
 
-		   var map = new kakao.maps.Map(mapContainer, options);
+		   const map = new kakao.maps.Map(mapContainer, options);
 		   
 		   function getRestaurantList() {
-		      axios.get('/restaurant/ajaxGetList').then(function(res) {
+			  const bounds = map.getBounds()
+			  const SouthWest = bounds.getSouthWest();
+			  const NorthEast = bounds.getNorthEast();
+			  console.log("SouthWest: " + SouthWest)
+			  console.log("NorthEast: " + NorthEast)
+			  
+			  
+			  const sw_lat =SouthWest.getLat();
+			  const sw_lng =SouthWest.getLng();
+			  const ne_lat =NorthEast.getLat();
+			  const ne_lng =NorthEast.getLng();
+		      axios.get('/restaurant/ajaxGetList',{
+		          params:{
+			        	 sw_lat,sw_lng, ne_lat,ne_lng
+			         }  
+		      }).then(function(res) {
 		         console.log(res.data)
-		         
 		         res.data.forEach(function(item) {      
 		            
 		            createMarker(item)
@@ -34,7 +48,7 @@
 		         })
 		      })      
 		   }
-		   getRestaurantList()
+		   kakao.maps.event.addListener(map,'dragend',getRestaurantList)
 		   
 		   function createMarker(item){
 			   var content = document.createElement('div')

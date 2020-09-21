@@ -18,21 +18,23 @@ public class UserService {
 	// DTO : parameter / DMI : Select 
 	public int login(UserParam param) {
 		if(param.getUser_id().equals("")) {
+			System.out.println(param.getUser_id().equals(""));
 			return Const.NO_ID;
 		}
 		UserDMI dbUser = mapper.selUser(param);
 		if(dbUser == null) { return Const.NO_ID;};
 		System.out.println("db pw: " + dbUser.getUser_pw());
+		
 		String encryPw = SecurityUtils.getEncrypt(param.getUser_pw(), dbUser.getSalt());
 		System.out.println("encryPw:" + encryPw);
 		
-		if(encryPw.equals(dbUser.getUser_pw())) {
-			param.setUser_pw(null);
-			param.setNm(dbUser.getNm());
-			param.setProfile_img(dbUser.getProfile_img());
-			return Const.SUCCESS;
-		}else
-			return Const.NO_PW;	
+		if(!encryPw.equals(dbUser.getUser_pw())) {
+			return Const.NO_PW;
+		}	
+		param.setUser_pw(null);
+		param.setNm(dbUser.getNm());
+		param.setProfile_img(dbUser.getProfile_img());
+		return Const.SUCCESS;
 	}
 
 	public int join(UserVO param) {

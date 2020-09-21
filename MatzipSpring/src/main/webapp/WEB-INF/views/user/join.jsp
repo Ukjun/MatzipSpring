@@ -7,7 +7,7 @@
 		<form id="frm" class="frm" action="/user/join" method="post">
 			<div id="idChkResult"></div>
 			<div><input type="text" name="user_id" id="user_id" placeholder="아이디">
-				<button type="button" id="id_btn" onclick="chkId()">아이디 중복체크</button>
+				<button type="button" id="id_btn" onclick="chkId()" value="0">아이디 중복체크</button>
 			</div>
 			<div><input type="password" name="user_pw" placeholder="비밀번호"></div>
 			<div><input type="password" name="user_pwre" placeholder="비밀번호 확인"></div>
@@ -25,17 +25,15 @@
 	
 	function chkId(){
 		const user_id = frm.user_id.value;
-		axios.get('/user/ajaxIdChk',{
-			params: {
-				//문자 : value 값
+		axios.post('/user/ajaxIdChk',{
+			//문자 : value 값
 				user_id
-			}
 		}).then(function(res){
 			console.log(res);
-			console.log(res.data.result);
-			if(res.data.result == 2){ // 아이디 없음
+			console.log(res.data);
+			if(res.data == "2"){ // 아이디 없음
 				idChkResult.innerText = "사용할수 있는 아이디입니다."
-			}else if(res.data.result ==3){ // 아이디 이미 있음
+			}else if(res.data == "3"){ // 아이디 이미 있음
 				idChkResult.innerText = "이미 사용하는 아이디입니다."
 			}
 		})
