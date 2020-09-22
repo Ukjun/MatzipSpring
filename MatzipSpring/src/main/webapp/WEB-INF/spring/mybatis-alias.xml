@@ -12,5 +12,8 @@
 		<typeAlias type="com.koreait.matzip.restaurant.model.RestaurantVO" alias="RestaurantVO"/>
 		<typeAlias type="com.koreait.matzip.restaurant.model.RestaurantDMI" alias="RestaurantDMI"/>
 		<typeAlias type="com.koreait.matzip.restaurant.model.RestaurantParam" alias="RestaurantParam"/>
+		
+		
+		<typeAlias type="com.koreait.matzip.model.CodeVO" alias="CodeVO"/>
 	</typeAliases>
 </configuration>

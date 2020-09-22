@@ -14,7 +14,7 @@
 		insert into t_restaurant
 		(nm, addr, lat, lng, cd_category, i_user)
 		values
-		(#{nm}, #{addr}, #{lat}, #{lng}, 1, #{i_user})
+		(#{nm}, #{addr}, #{lat}, #{lng}, #{cd_category}, #{i_user})
 		
 	</insert>
 </mapper>

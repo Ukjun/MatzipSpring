@@ -24,7 +24,7 @@
 			<div>
 				카테고리 : 
 				<select name="cd_category">
-					<option value="1">--선택--</option>
+					<option value="0">--선택--</option>
 					<c:forEach items="${categoryList }" var="item">
 						<option value="${item.cd }">${item.val }</option>
 					</c:forEach>
@@ -39,6 +39,7 @@
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc267f04a16124aede3d52e9e1efb762&libraries=services"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script>
+	console.log(`${LoginUser.i_user}`)
 		var geocoder = new kakao.maps.services.Geocoder();
 		function chkFrm(){
 			if(frm.nm.value.length==0){
