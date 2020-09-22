@@ -17,6 +17,7 @@
 	<div id="container">
 		<header>
 			<div id="headerLeft">
+			<c:if test="${LoginUser !=null }">
 				<div class="containerPImg">
 					<c:choose>
 						<c:when test="${LoginUser.profile_img != null}">
@@ -34,6 +35,10 @@
 				<div class='ml15' id="headerLogout">
 					<a href="/user/logout">로그아웃</a>
 				</div>
+				</c:if>
+				<c:if test="${LoginUser == null }">
+					<div class="ml15" id="headerLogout"><a href="/user/login">Login</a></div>
+				</c:if>
 			</div>
 			<div id="headerRight">
 				<a href="/restaurant/map">지도</a>

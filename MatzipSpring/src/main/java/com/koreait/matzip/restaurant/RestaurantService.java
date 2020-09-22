@@ -19,11 +19,8 @@ public class RestaurantService {
 	@Autowired
 	private CommonMapper cMapper;
 	
-	String selRestList(RestaurantParam param){
-		List<RestaurantDMI> list = mapper.selRestList(param);
-		System.out.println("list size:" + list.size());
-		Gson gson = new Gson();
-		return gson.toJson(list);
+	public List<RestaurantDMI> selRestList(RestaurantParam param){
+		return mapper.selRestList(param);
 	}
 	
 	int insRest(RestaurantParam param) {

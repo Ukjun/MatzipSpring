@@ -1,21 +1,58 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <link
+	pageEncoding="UTF-8"%>
+<link
 	href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap"
 	rel="stylesheet">
-	<style>
-		.label {margin-bottom: 96px;}
-		.label * {display: inline-block;vertical-align: top;}
-		.label .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 24px;overflow: hidden;vertical-align: top;width: 7px;}
-		.label .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 24px;font-size: 12px;line-height: 24px;}
-		.label .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 24px;overflow: hidden;width: 6px;}
-	</style>
+<style>
+.label {
+	margin-bottom: 96px;
+}
+
+.label * {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.label .left {
+	background:
+		url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png")
+		no-repeat;
+	display: inline-block;
+	height: 24px;
+	overflow: hidden;
+	vertical-align: top;
+	width: 7px;
+}
+
+.label .center {
+	background:
+		url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png)
+		repeat-x;
+	display: inline-block;
+	height: 24px;
+	font-size: 12px;
+	line-height: 24px;
+}
+
+.label .right {
+	background:
+		url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png")
+		-1px 0 no-repeat;
+	display: inline-block;
+	height: 24px;
+	overflow: hidden;
+	width: 6px;
+}
+</style>
 <div id="sectionContainerCenter">
-	<div id="mapContainer" style="width:100%; height:100%;"></div>
-	
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc267f04a16124aede3d52e9e1efb762"></script>
+	<div id="mapContainer" style="width: 100%; height: 100%;"></div>
+
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc267f04a16124aede3d52e9e1efb762"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script>		
+	 var markerList = [] // Marker List
+	 
 	 const options = { //지도를 생성할 때 필요한 기본 옵션
 		      center: new kakao.maps.LatLng(35.865864, 128.593841), //지도의 중심좌표.
 		      level: 5 //지도의 레벨(확대, 축소 정도)
@@ -24,7 +61,12 @@
 		   const map = new kakao.maps.Map(mapContainer, options);
 		   
 		   function getRestaurantList() {
-			  const bounds = map.getBounds()
+			  // 마커 모두 지우기
+			  markerList.forEach(function(marker){
+				  marker.setMap(null)
+			  })
+			  
+			  const bounds = map.getBounds();
 			  const SouthWest = bounds.getSouthWest();
 			  const NorthEast = bounds.getNorthEast();
 			  console.log("SouthWest: " + SouthWest)
@@ -48,7 +90,7 @@
 		         })
 		      })      
 		   }
-		   kakao.maps.event.addListener(map,'dragend',getRestaurantList)
+		   kakao.maps.event.addListener(map,'tilesloaded',getRestaurantList)
 		   
 		   function createMarker(item){
 			   var content = document.createElement('div')
@@ -87,6 +129,8 @@
 		    	  moveToDetail(item.i_rest)
 		      })
 		      marker.setMap(map)
+		      
+		      markerList.push(marker)
 		   }
 		   
 		   function moveToDetail(i_rest){

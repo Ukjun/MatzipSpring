@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.koreait.matzip.Const;
@@ -25,10 +26,19 @@ public class UserController {
 	private UserService service;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model) {
-		model.addAttribute(Const.TITLE,"Login");
-		model.addAttribute(Const.VIEW,"/user/login");
-		return ViewRef.TEMP_DEFAULT;
+	public ModelAndView login(ModelAndView model) {
+		System.out.println("Controller - Login ");
+		
+		model.addObject(Const.TITLE,"Login");
+		model.addObject(Const.VIEW,"/user/login");
+		model.setViewName(ViewRef.TEMP_DEFAULT);
+		//return을 void로하면 css가 적용이안되지만 
+		//리턴타입을 ModelAndView로하고 리턴을 parameter로 하게된다면 css적용되있는 것이 유지가 된다.
+		
+		return model;
+//		model.addAttribute(Const.TITLE,"Login");
+//		model.addAttribute(Const.VIEW,"/user/login");
+//		return ViewRef.TEMP_DEFAULT;
 	}
 	
 //	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -72,6 +82,7 @@ public class UserController {
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	//변수와 보내는 속성이름이 같지않다면 따로 설정을해줘야된다
 	public String join(Model model,  @RequestParam(defaultValue="0") int err) {
+		System.out.println("Controller - Jo ");
 		System.out.println("err:" + err);
 		
 		if(err>0) {
@@ -103,6 +114,12 @@ public class UserController {
 		System.out.println("user_id : " + param.getUser_id());
 		int result = service.login(param);
 		return String.valueOf(result);
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession hs) {
+		hs.invalidate();
+		return "redirect:/user/login";
 	}
 	
 }

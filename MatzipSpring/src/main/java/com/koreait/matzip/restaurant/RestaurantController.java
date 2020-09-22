@@ -1,5 +1,7 @@
 package com.koreait.matzip.restaurant;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.koreait.matzip.Const;
 import com.koreait.matzip.SecurityUtils;
 import com.koreait.matzip.ViewRef;
+import com.koreait.matzip.restaurant.model.RestaurantDMI;
 import com.koreait.matzip.restaurant.model.RestaurantParam;
 import com.koreait.matzip.user.model.UserVO;
 
@@ -33,7 +36,7 @@ public class RestaurantController {
 	//한글 깨짐 방지
 	@RequestMapping(value= "/ajaxGetList" , produces ="application/json; charset=UTF-8")
 	@ResponseBody
-	public String ajaxGetList(RestaurantParam param) {
+	public List<RestaurantDMI> ajaxGetList(RestaurantParam param) {
 		System.out.println("sw_lat: " +param.getSw_lat());
 		System.out.println("sw_lng: " +param.getSw_lng());
 		System.out.println("ne_lat: " +param.getNe_lat());
@@ -62,5 +65,12 @@ public class RestaurantController {
 		service.insRest(param);
 		
 		return "redirect:/restaurant/map";
+	}
+	
+	@RequestMapping("/restDetail")
+	public String detailRestaurant(Model model) {
+		model.addAttribute(Const.TITLE,"등록");
+		model.addAttribute(Const.VIEW,"restaurant/restDetail");
+		return ViewRef.TEMP_MAP;
 	}
 }
