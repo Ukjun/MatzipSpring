@@ -23,7 +23,7 @@ public class RestaurantService {
 		return mapper.selRestList(param);
 	}
 	
-	int insRest(RestaurantParam param) {
+	public int insRest(RestaurantParam param) {
 		
 		System.out.println("i_user:" + param.getI_user());
 		int result = mapper.restInsert(param);
@@ -37,5 +37,10 @@ public class RestaurantService {
 		p.setI_m(1); // 음식점 카테고리 코드 = 1
 		
 		return cMapper.selCodeList(p);
+	}
+	
+	
+	public RestaurantDMI detailRest(RestaurantParam param) {
+		return mapper.detailRest(param);
 	}
 }

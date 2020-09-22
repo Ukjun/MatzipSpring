@@ -40,7 +40,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 			}
 		case ViewRef.URI_RESTURANT:
 			switch(uriArr[2]) {
-			case "restReg": case "map":
+			case "restReg":
 				if(isLogout) { // 로그아웃상태
 					response.sendRedirect("/user/login");
 					return false;

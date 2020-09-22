@@ -42,7 +42,12 @@
 			</div>
 			<div id="headerRight">
 				<a href="/restaurant/map">지도</a>
-				<a class="ml15" href="/restaurant/restReg">등록</a> 
+				<c:if test="${LoginUser != null}">
+					<a class="ml15" href="/restaurant/restReg">등록</a>	
+				</c:if>
+				 <c:if test="${LoginUser==null }">
+				 	<a class="ml15" href="#" onclick="alert('Please after login to enter')">등록</a>
+				 </c:if>
 				<a class="ml15" href="/user/favorite">찜</a>
 			</div>
 		</header>
@@ -51,5 +56,10 @@
 		</section>
 		<footer> 회사 정보 </footer>
 	</div>
+	<script>
+	function moveToReg(){
+		
+	}
+	</script>
 </body>
 </html>

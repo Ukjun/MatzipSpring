@@ -81,9 +81,9 @@
 					</span>
 				</div>
 				<div class="status_branch_none"></div>
-				조회수 : <span class="cnt_hit">${data.cntHits }</span> 
+				조회수 : <span class="cnt_hit">${data.hits }</span> 
 				<span class="cnt_review"></span> 
-				찜 : <span class="cnt_facvorite">${data.cntFavorite }</span>
+				찜 : <span class="cnt_facvorite">${data.cnt_favorite }</span>
 
 			</div>
 			<div>

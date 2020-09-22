@@ -12,4 +12,5 @@ import com.koreait.matzip.restaurant.model.RestaurantVO;
 public interface RestaurantMapper {
 	public int restInsert(RestaurantVO p);
 	public List<RestaurantDMI> selRestList(RestaurantParam p);
+	public RestaurantDMI detailRest(RestaurantParam p);
 }

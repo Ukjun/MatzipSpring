@@ -17,4 +17,23 @@
 		(#{nm}, #{addr}, #{lat}, #{lng}, #{cd_category}, #{i_user})
 		
 	</insert>
+	
+  <select id="detailRest" parameterType="RestaurantParam" resultType = "RestaurantDMI">
+		select A.i_rest, A.nm, A.addr, A.i_user, A.hits, 
+		B.val as cd_category_nm,
+		C.nm AS user_nm, 
+		IFNULL(D.cnt,0) AS cnt_favorite
+		from t_restaurant A
+		inner join c_code_d B
+		on A.cd_category = B.cd
+		and B.i_m = 1
+		left join t_user c
+		on A.i_user = C.i_user
+		LEFT JOIN (SELECT i_rest, COUNT(i_rest) AS cnt
+		FROM t_user_favorite
+		WHERE i_rest = #{i_rest}
+		GROUP BY i_rest) D
+		ON A.i_rest = D.i_rest
+		WHERE A.i_rest = #{i_rest}
+   </select>
 </mapper>

@@ -68,9 +68,18 @@ public class RestaurantController {
 	}
 	
 	@RequestMapping("/restDetail")
-	public String detailRestaurant(Model model) {
+	public String detailRestaurant(Model model, RestaurantParam param) {
+		RestaurantDMI vo = service.detailRest(param);
+		model.addAttribute("data", vo);
 		model.addAttribute(Const.TITLE,"등록");
 		model.addAttribute(Const.VIEW,"restaurant/restDetail");
+		
+		System.out.println("i_user: "  + vo.getI_user());
+		System.out.println("i_rest: "  + vo.getI_rest());
+		System.out.println("addr: "  + vo.getAddr());
+		System.out.println("nm: "  + vo.getNm());
+		
+		
 		return ViewRef.TEMP_MAP;
 	}
 }

@@ -118,6 +118,7 @@ public class UserController {
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession hs) {
+		// Session에 있는 것 모두삭제
 		hs.invalidate();
 		return "redirect:/user/login";
 	}
