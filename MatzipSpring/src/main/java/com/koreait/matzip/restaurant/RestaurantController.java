@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import com.koreait.matzip.SecurityUtils;
 import com.koreait.matzip.ViewRef;
 import com.koreait.matzip.restaurant.model.RestaurantDMI;
 import com.koreait.matzip.restaurant.model.RestaurantParam;
+import com.koreait.matzip.restaurant.model.RestaurantRecMenuVO;
 import com.koreait.matzip.user.model.UserVO;
 
 
@@ -73,9 +75,12 @@ public class RestaurantController {
 	public String detailRestaurant(Model model, RestaurantParam param) {
 		RestaurantDMI vo = service.detailRest(param);
 		service.addHits(param);
+		
 		model.addAttribute("data", vo);
+		model.addAttribute("recommendMenuList",service.selRestRecMenus(param));
 		model.addAttribute(Const.TITLE,"등록");
 		model.addAttribute(Const.VIEW,"restaurant/restDetail");
+		
 		
 		System.out.println("i_user: "  + vo.getI_user());
 		System.out.println("i_rest: "  + vo.getI_rest());
@@ -104,13 +109,26 @@ public class RestaurantController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("/recMenus")
+	@RequestMapping(value= "/recMenus", method=RequestMethod.POST)
 	public String recMenus(MultipartHttpServletRequest mReq, RedirectAttributes ra) {
 		int i_rest = service.insRecMenu(mReq);
 		//쿼리 스트링을 만드는 문장
 		ra.addAttribute("i_rest", i_rest);
 		
-		return "redirect:/restaurant/detail";
+		return "redirect:/restaurant/restDetail";
+	}
+	
+	@RequestMapping("/ajaxDelRecMenu")
+	@ResponseBody
+	public int ajaxDelRecMenu(RestaurantParam vo,HttpSession hs) {
+		String path = "/resources/img/rest/" + vo.getI_rest()+"/rec_menu/";
+		String realPath = hs.getServletContext().getRealPath(path);
+		int i_user = SecurityUtils.getLoginUserPk(hs);
+		int i_rest = vo.getI_rest();
+		vo.setI_user(i_user);
+		
+		
+		return service.ajaxDelRecMenu(vo,path); 
 	}
 	
 }

@@ -40,7 +40,7 @@
 				<div class="recMenuItem" id="recMenuItem_${item.seq }">
 					<div class="pic">
 						<c:if test="${item.menu_pic != null && item.menu_pic != ''}">
-							<img src ="/res/img/restaurant/${data.i_rest }/${item.menu_pic}" id="pic_img">
+							<img src ="/res/img/rest/${data.i_rest }/rec_menu/${item.menu_pic}" id="pic_img">
 						</c:if>
 					</div>
 					<div class="info">
@@ -153,7 +153,7 @@
 		inputPrice.setAttribute('name','menu_price')
 		var inputPic = document.createElement('input');
 		inputPic.setAttribute("type","file")
-		inputPic.setAttribute('name','menu_pic_' + idx++)
+		inputPic.setAttribute('name','menu_pic')
 		
 		
 		div.append('메뉴 : ')
@@ -175,14 +175,15 @@
 		//여기서 이엘식 적는것은 고정값을 지정하는 것 
 		axios.get('/restaurant/ajaxDelRecMenu',{
 			params:{
-				i_rest, 
+				'i_rest' : ${data.i_rest}, 
 				seq, 
 				fileNm,
 				'i_user' : ${data.i_user}
 			}
 		}).then(function(res){
-			if(res.data.result==1){
+			if(res.data==1){
 				//element 삭제
+				console.log(res.data)
 				var ele = document.querySelector('#recMenuItem_' + seq)
 				ele.remove();
 			}

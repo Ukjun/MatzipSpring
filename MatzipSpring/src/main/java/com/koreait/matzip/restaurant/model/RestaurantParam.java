@@ -5,6 +5,13 @@ public class RestaurantParam extends RestaurantVO{
 	private double sw_lng;
 	private double ne_lat;
 	private double ne_lng;
+	private int seq;
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
 	public double getSw_lat() {
 		return sw_lat;
 	}

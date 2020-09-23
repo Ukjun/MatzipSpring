@@ -102,6 +102,7 @@ public class RestaurantService {
 			
 			String menu_nm = menunmArr[i];
 			int menu_price = CommonUtils.parseStringToInt(pricenmArr[i]);
+			vo.setI_rest(i_rest);
 			vo.setMenu_nm(menu_nm);
 			vo.setMenu_price(menu_price);
 			
@@ -110,6 +111,7 @@ public class RestaurantService {
 			
 			if(mf.isEmpty()) {continue;} //파일이 없으면 스킵
 			
+			System.out.println("진입");
 			String originFileNm = mf.getOriginalFilename();
 			String ext = FileUtils.getExt(originFileNm);
 			String saveFileNm = UUID.randomUUID() + ext;
@@ -124,7 +126,41 @@ public class RestaurantService {
 			
 			
 		}
+		for(RestaurantRecMenuVO vo : list) {
+			mapper.insRestRecMenu(vo);
+		}
 	return i_rest;	
+	}
+	public List<RestaurantRecMenuVO>selRestRecMenus(RestaurantParam param){
+		return mapper.selRestRecMenus(param);
+	}
+	
+	public int ajaxDelRecMenu(RestaurantParam param,String realPath) {
+		//파일 삭제
+		List<RestaurantRecMenuVO> list = mapper.selRestRecMenus(param);
+		System.out.println("RecMenuList Size : " + list.size());
+		
+		if(list.size()==1) {
+			RestaurantRecMenuVO item = list.get(0);
+			realPath += item.getMenu_pic();
+			//getrealPath() 재설정하기!!!!!!!!!!!!!!!
+			System.out.println("realPath : " + realPath);
+			if(item.getMenu_pic()!=null && !item.getMenu_pic().equals("")) {
+				File file = new File(realPath);
+				if(file.exists()) {
+					if(file.delete()) {
+						System.out.println("----File Delete Success----");
+					}else {
+						System.out.println("----File Delete Fail----");
+					}
+				}else {
+					System.out.println("Not Found File");
+				}
+			}
+		}
+		
+		
+		return mapper.ajaxDelRecMenu(param);
 	}
 	
 }

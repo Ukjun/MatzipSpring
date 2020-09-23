@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 
 <c:forEach items="${css }" var="item">
-		<link rel="stylesheet" type="text/css" href="/res/css/${item }.css">
+		<link rel="stylesheet" type="text/css" href="/res/css/common.css">
 </c:forEach>
 <link rel="stylesheet" type="text/css" href="/res/css/common.css">
 </head>

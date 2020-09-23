@@ -10,14 +10,6 @@
 		AND lng BETWEEN #{sw_lng} AND #{ne_lng};
 	</select>
 	
-	<insert id="restInsert" parameterType="RestaurantVO">
-		insert into t_restaurant
-		(nm, addr, lat, lng, cd_category, i_user)
-		values
-		(#{nm}, #{addr}, #{lat}, #{lng}, #{cd_category}, #{i_user})
-		
-	</insert>
-	
   <select id="detailRest" parameterType="RestaurantParam" resultType = "RestaurantDMI">
 		select A.i_rest, A.nm, A.addr, A.i_user, A.hits, 
 		B.val as cd_category_nm,
@@ -37,6 +29,36 @@
 		WHERE A.i_rest = #{i_rest}
    </select>
    
+   <select id="selRestRecMenus" parameterType="RestaurantParam" resultType="RestaurantRecMenuVO">
+      SELECT A.i_rest, A.seq, A.menu_nm, A.menu_price, A.menu_pic
+      FROM t_restaurant_recommend_menu A
+      <if test="i_user>0">
+      inner join t_restaurant B
+      on A.i_rest = B.i_rest
+      and B.i_user = #{i_user}
+      </if>
+      WHERE A.i_rest = #{i_rest}
+      <if test="seq>0">
+      	and A.seq = #{seq}
+      </if>
+   </select>
+   
+   <insert id="restInsert" parameterType="RestaurantVO">
+		insert into t_restaurant
+		(nm, addr, lat, lng, cd_category, i_user)
+		values
+		(#{nm}, #{addr}, #{lat}, #{lng}, #{cd_category}, #{i_user})
+		
+	</insert>
+	
+	<insert id="insRestRecMenu" parameterType="RestaurantParam">
+   	insert into t_restaurant_recommend_menu
+   	(i_rest, seq, menu_nm, menu_price, menu_pic)
+   	select #{i_rest}, ifnull(max(seq),0)+1, #{menu_nm}, #{menu_price}, #{menu_pic} 
+   	from t_restaurant_recommend_menu
+   	where i_rest = #{i_rest}
+   </insert>
+	
    <update id="addHits" parameterType="RestaurantParam" >
    		update t_restaurant set hits = hits +1 where i_rest = #{i_rest}
    </update>
@@ -48,17 +70,29 @@
    		where B.i_rest = #{i_rest}
    		and B.i_user = #{i_user}
    </delete>
+   
    <delete id="delRestaurantMenu" parameterType="RestaurantParam">
    		delete A from t_restaurant_menu A
    		inner join t_restaurant B
    		on A.i_rest = B.i_rest
    		where B.i_rest = #{i_rest}
    		and B.i_user = #{i_user}
+   		<if test="seq>0">
+   			and A.seq = #{seq}
+   		</if>
    </delete>
+   
    <delete id="delRestaurant" parameterType="RestaurantParam">
    		delete from t_restaurant
    		where i_rest = #{i_rest}
    		and i_user = #{i_user}
    </delete>
    
+   <delete id="ajaxDelRecMenu" parameterType="RestaurantParam">
+   		delete A from t_restaurant_recommend_menu A
+   		inner join t_restaurant B
+   		on A.i_rest = B.i_rest
+   		and B.i_user = #{i_user}
+   		where A.i_rest = #{i_rest} and A.seq = #{seq}
+   </delete>
 </mapper>

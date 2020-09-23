@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.koreait.matzip.restaurant.model.RestaurantDMI;
 import com.koreait.matzip.restaurant.model.RestaurantParam;
+import com.koreait.matzip.restaurant.model.RestaurantRecMenuVO;
 import com.koreait.matzip.restaurant.model.RestaurantVO;
 
 @Mapper
@@ -17,4 +18,7 @@ public interface RestaurantMapper {
 	public int delRestaurantMenu(RestaurantParam p);
 	public int delRestaurant(RestaurantParam p);
 	public int addHits(RestaurantParam p);
+	public int insRestRecMenu(RestaurantRecMenuVO vo);
+	List<RestaurantRecMenuVO> selRestRecMenus(RestaurantParam param);
+	public int ajaxDelRecMenu(RestaurantParam vo);
 }
