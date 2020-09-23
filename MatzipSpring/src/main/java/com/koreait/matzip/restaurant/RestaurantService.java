@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -135,14 +137,15 @@ public class RestaurantService {
 		return mapper.selRestRecMenus(param);
 	}
 	
-	public int ajaxDelRecMenu(RestaurantParam param,String realPath) {
+	public int ajaxDelRecMenu(RestaurantParam param,String realPath,HttpSession hs) {
 		//파일 삭제
 		List<RestaurantRecMenuVO> list = mapper.selRestRecMenus(param);
 		System.out.println("RecMenuList Size : " + list.size());
 		
 		if(list.size()==1) {
 			RestaurantRecMenuVO item = list.get(0);
-			realPath += item.getMenu_pic();
+			realPath = hs.getServletContext().getRealPath(realPath+item.getMenu_pic());
+			
 			//getrealPath() 재설정하기!!!!!!!!!!!!!!!
 			System.out.println("realPath : " + realPath);
 			if(item.getMenu_pic()!=null && !item.getMenu_pic().equals("")) {

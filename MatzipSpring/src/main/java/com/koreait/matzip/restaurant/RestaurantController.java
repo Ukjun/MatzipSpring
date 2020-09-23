@@ -128,7 +128,7 @@ public class RestaurantController {
 		vo.setI_user(i_user);
 		
 		
-		return service.ajaxDelRecMenu(vo,path); 
+		return service.ajaxDelRecMenu(vo,path,hs); 
 	}
 	
 }
