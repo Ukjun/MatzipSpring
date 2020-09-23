@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.koreait.matzip.Const;
@@ -90,6 +92,7 @@ public class RestaurantController {
 		param.setI_user(loginI_user);
 		
 		int result = 1;
+		//try-catch가 없으면 query문이 다 보이게된다.
 		try {
 			service.delRestTran(param);
 		}catch(Exception e) {
@@ -100,4 +103,14 @@ public class RestaurantController {
 		
 		return "redirect:/";
 	}
+	
+	@RequestMapping("/recMenus")
+	public String recMenus(MultipartHttpServletRequest mReq, RedirectAttributes ra) {
+		int i_rest = service.insRecMenu(mReq);
+		//쿼리 스트링을 만드는 문장
+		ra.addAttribute("i_rest", i_rest);
+		
+		return "redirect:/restaurant/detail";
+	}
+	
 }

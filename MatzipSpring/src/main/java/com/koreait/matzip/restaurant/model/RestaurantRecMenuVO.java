@@ -1,6 +1,6 @@
-package com.koreait.matzip.model;
+package com.koreait.matzip.restaurant.model;
 
-public class RestaurantRecommendMenuVO {
+public class RestaurantRecMenuVO {
 	private int i_rest;
 	private int seq;
 	private String menu_nm;

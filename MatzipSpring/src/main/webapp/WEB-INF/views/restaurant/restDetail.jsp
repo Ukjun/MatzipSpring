@@ -15,7 +15,7 @@
 				<a href="/restaurant/restMod"><button>수정</button></a>
 				<button onclick="isDel()">가게 삭제</button>
 				
-				<form id="recFrm" action="/restaurant/addRecMenus" enctype="multipart/form-data" method = "post">
+				<form id="recFrm" action="/restaurant/recMenus" enctype="multipart/form-data" method = "post">
 					<div><button type="button" id="menu_btn" onclick="addRecMenu()">추천 메뉴 추가</button></div>
 					<input type="hidden" name="i_rest" value="${data.i_rest }">
 					 <div id="recItem">
