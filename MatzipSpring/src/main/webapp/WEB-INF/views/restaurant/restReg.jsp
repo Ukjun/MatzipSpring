@@ -7,8 +7,8 @@
 	rel="stylesheet">
 <div id="sectionContainerCenter">
 	<div>
-		<form id="frm" action="/restaurant/restregProc" method="post">
-			<!-- onsubmit="return chkFrm()" -->
+		<form id="frm" action="/restaurant/restregProc" method="post"
+			 onsubmit="return chkFrm()">
 			<div>
 				<input type="text" name="nm" placeholder="가게명">
 			</div>

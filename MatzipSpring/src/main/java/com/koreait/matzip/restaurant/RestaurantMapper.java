@@ -13,4 +13,8 @@ public interface RestaurantMapper {
 	public int restInsert(RestaurantVO p);
 	public List<RestaurantDMI> selRestList(RestaurantParam p);
 	public RestaurantDMI detailRest(RestaurantParam p);
+	public int delRecRestaurant(RestaurantParam p);
+	public int delRestaurantMenu(RestaurantParam p);
+	public int delRestaurant(RestaurantParam p);
+	public int addHits(RestaurantParam p);
 }

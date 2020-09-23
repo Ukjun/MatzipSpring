@@ -36,4 +36,29 @@
 		ON A.i_rest = D.i_rest
 		WHERE A.i_rest = #{i_rest}
    </select>
+   
+   <update id="addHits" parameterType="RestaurantParam" >
+   		update t_restaurant set hits = hits +1 where i_rest = #{i_rest}
+   </update>
+   
+   <delete id="delRecRestaurant" parameterType="RestaurantParam">
+   		delete A from t_restaurant_recommend_menu A
+   		inner join t_restaurant B
+   		on A.i_rest = B.i_rest
+   		where B.i_rest = #{i_rest}
+   		and B.i_user = #{i_user}
+   </delete>
+   <delete id="delRestaurantMenu" parameterType="RestaurantParam">
+   		delete A from t_restaurant_menu A
+   		inner join t_restaurant B
+   		on A.i_rest = B.i_rest
+   		where B.i_rest = #{i_rest}
+   		and B.i_user = #{i_user}
+   </delete>
+   <delete id="delRestaurant" parameterType="RestaurantParam">
+   		delete from t_restaurant
+   		where i_rest = #{i_rest}
+   		and i_user = #{i_user}
+   </delete>
+   
 </mapper>

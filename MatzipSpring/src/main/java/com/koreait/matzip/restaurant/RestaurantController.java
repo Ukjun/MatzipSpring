@@ -70,6 +70,7 @@ public class RestaurantController {
 	@RequestMapping("/restDetail")
 	public String detailRestaurant(Model model, RestaurantParam param) {
 		RestaurantDMI vo = service.detailRest(param);
+		service.addHits(param);
 		model.addAttribute("data", vo);
 		model.addAttribute(Const.TITLE,"등록");
 		model.addAttribute(Const.VIEW,"restaurant/restDetail");
@@ -81,5 +82,22 @@ public class RestaurantController {
 		
 		
 		return ViewRef.TEMP_MAP;
+	}
+	
+	@RequestMapping("/del")
+	public String delRestaurant(RestaurantParam param, HttpSession hs) {
+		int loginI_user = SecurityUtils.getLoginUserPk(hs);
+		param.setI_user(loginI_user);
+		
+		int result = 1;
+		try {
+			service.delRestTran(param);
+		}catch(Exception e) {
+			result =0;
+		}
+		System.out.println("result : " + result);
+		
+		
+		return "redirect:/";
 	}
 }

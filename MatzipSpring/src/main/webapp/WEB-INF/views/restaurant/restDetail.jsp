@@ -129,12 +129,11 @@
 	
 	
 	var idx = 0;
-	
 	console.log(`${LoginUser.i_user}`)
 	console.log(`${data.i_user}`)
 		function isDel(){
 			if(confirm('Do you want Delete?')){
-				location.href = '/restaurant/restDel?i_rest=${data.i_rest}'
+				location.href = '/restaurant/del?i_rest=${data.i_rest}'
 			}
 		}
 	function addMenu(){
