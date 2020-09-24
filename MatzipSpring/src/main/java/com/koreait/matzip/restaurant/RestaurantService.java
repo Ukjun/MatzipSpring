@@ -140,7 +140,7 @@ public class RestaurantService {
 	public List<RestaurantRecMenuVO>selRestMenus(RestaurantParam param){
 		return mapper.selRestMenus(param);
 	}
-	
+	// 추천메뉴 삭제
 	public int ajaxDelRecMenu(RestaurantParam param,String realPath) {
 		//파일 삭제
 		List<RestaurantRecMenuVO> list = mapper.selRestRecMenus(param);
@@ -165,6 +165,33 @@ public class RestaurantService {
 			}
 		}
 		return mapper.ajaxDelRecMenu(param);
+	}
+	
+	// 메뉴삭제
+	public int ajaxDelMenu(RestaurantParam param,String realPath) {
+		//파일 삭제
+		List<RestaurantRecMenuVO> list = mapper.selRestMenus(param);
+		System.out.println("MenuList Size : " + list.size());
+		
+		if(list.size()==1) {
+			RestaurantRecMenuVO item = list.get(0);
+			
+			System.out.println("realPath : " + realPath);
+			if(item.getMenu_pic()!=null && !item.getMenu_pic().equals("")) {
+				File file = new File(realPath+item.getMenu_pic());
+				if(file.exists()) {
+					if(file.delete()) {
+						System.out.println("----File Delete Success----");
+						return mapper.ajaxDelMenu(param);
+					}else {
+						System.out.println("----File Delete Fail----");
+					}
+				}else {
+					System.out.println("Not Found File");
+				}
+			}
+		}
+		return mapper.ajaxDelMenu(param);
 	}
 
 	public void insMenus(RestaurantFile param,HttpSession hs) {

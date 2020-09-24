@@ -118,4 +118,12 @@
    		and B.i_user = #{i_user}
    		where A.i_rest = #{i_rest} and A.seq = #{seq}
    </delete>
+   
+   <delete id="ajaxDelMenu" parameterType="RestaurantParam">
+   		delete A from t_restaurant_menu A
+   		inner join t_restaurant B
+   		on A.i_rest = B.i_rest
+   		and B.i_user = #{i_user}
+   		where A.i_rest = #{i_rest} and A.seq = #{seq}
+   </delete>
 </mapper>

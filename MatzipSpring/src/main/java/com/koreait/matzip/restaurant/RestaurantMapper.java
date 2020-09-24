@@ -21,6 +21,7 @@ public interface RestaurantMapper {
 	public int insRestRecMenu(RestaurantRecMenuVO vo);
 	List<RestaurantRecMenuVO> selRestRecMenus(RestaurantParam param);
 	public int ajaxDelRecMenu(RestaurantParam vo);
+	public int ajaxDelMenu(RestaurantParam vo);
 	public int insMenus(RestaurantRecMenuVO vo);
 	public List<RestaurantRecMenuVO> selRestMenus(RestaurantParam param);
 }

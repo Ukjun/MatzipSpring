@@ -215,7 +215,7 @@
 				'i_user' : ${data.i_user}
 			}
 		}).then(function(res){
-			if(res.data.result==1){
+			if(res.data==1){
 				//element 삭제
 				var ele = document.querySelector('#recMenuItem_' + seq)
 				ele.remove();

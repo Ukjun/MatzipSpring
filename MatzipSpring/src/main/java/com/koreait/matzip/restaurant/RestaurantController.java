@@ -133,6 +133,18 @@ public class RestaurantController {
 		return service.ajaxDelRecMenu(vo,realPath); 
 	}
 	
+	@RequestMapping("/ajaxDelMenu")
+	@ResponseBody
+	public int ajaxDelMenu(RestaurantParam vo,HttpSession hs) {
+		String path = "/resources/img/rest/" + vo.getI_rest()+"/menu/";
+		String realPath = hs.getServletContext().getRealPath(path);
+		int i_user = SecurityUtils.getLoginUserPk(hs);
+		vo.setI_user(i_user);
+		
+		
+		return service.ajaxDelMenu(vo,realPath); 
+	}
+	
 	@RequestMapping("/menus")
 	public String menus(@ModelAttribute RestaurantFile param, HttpSession hs) {
 		for(MultipartFile file : param.getMenu_pic()) {
