@@ -137,22 +137,21 @@ public class RestaurantService {
 		return mapper.selRestRecMenus(param);
 	}
 	
-	public int ajaxDelRecMenu(RestaurantParam param,String realPath,HttpSession hs) {
+	public int ajaxDelRecMenu(RestaurantParam param,String realPath) {
 		//파일 삭제
 		List<RestaurantRecMenuVO> list = mapper.selRestRecMenus(param);
 		System.out.println("RecMenuList Size : " + list.size());
 		
 		if(list.size()==1) {
 			RestaurantRecMenuVO item = list.get(0);
-			realPath = hs.getServletContext().getRealPath(realPath+item.getMenu_pic());
 			
-			//getrealPath() 재설정하기!!!!!!!!!!!!!!!
 			System.out.println("realPath : " + realPath);
 			if(item.getMenu_pic()!=null && !item.getMenu_pic().equals("")) {
-				File file = new File(realPath);
+				File file = new File(realPath+item.getMenu_pic());
 				if(file.exists()) {
 					if(file.delete()) {
 						System.out.println("----File Delete Success----");
+						return mapper.ajaxDelRecMenu(param);
 					}else {
 						System.out.println("----File Delete Fail----");
 					}
@@ -161,8 +160,6 @@ public class RestaurantService {
 				}
 			}
 		}
-		
-		
 		return mapper.ajaxDelRecMenu(param);
 	}
 	

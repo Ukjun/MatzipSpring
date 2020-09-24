@@ -124,11 +124,10 @@ public class RestaurantController {
 		String path = "/resources/img/rest/" + vo.getI_rest()+"/rec_menu/";
 		String realPath = hs.getServletContext().getRealPath(path);
 		int i_user = SecurityUtils.getLoginUserPk(hs);
-		int i_rest = vo.getI_rest();
 		vo.setI_user(i_user);
 		
 		
-		return service.ajaxDelRecMenu(vo,path,hs); 
+		return service.ajaxDelRecMenu(vo,realPath); 
 	}
 	
 }
