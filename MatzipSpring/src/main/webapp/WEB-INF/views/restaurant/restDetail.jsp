@@ -26,7 +26,7 @@
 			
 			<h2>-메뉴-</h2>
 			<div>
-				<form id="menuFrm" action="/restaurant/addMenuProc" enctype="multipart/form-data" method = "post">
+				<form id="menuFrm" action="/restaurant/menus" enctype="multipart/form-data" method = "post">
 					<input type="hidden" name="i_rest" value="${data.i_rest }">
 					<input type="file" name="menu_pic" multiple>
 					<div id="menuItem"></div>
@@ -61,7 +61,7 @@
 				<div class="recMenuItem" id="recMenuItem_${item.seq }">
 					<div class="pic">
 						<c:if test="${item.menu_pic != null && item.menu_pic != ''}">
-							<img src ="/res/img/restaurant/${data.i_rest }/menu/${item.menu_pic}" id="pic_img">
+							<img src ="/res/img/rest/${data.i_rest }/menu/${item.menu_pic}" id="pic_img">
 						</c:if>
 					</div>
 					<c:if test="${LoginUser.i_user == data.i_user && item.menu_pic != null}">
@@ -106,7 +106,7 @@
 							<c:if test="${fn:length(menuList)>0 }">
 								<c:forEach var="i" begin="0" end="${fn:length(menuList) > 3 ? 2 : fn:length(menuList) - 1}">
 											<div class="menuItem">
-												<img src="/res/img/restaurant/${data.i_rest}/menu/${menuList[i].menu_pic}">
+												<img src="/res/img/rest/${data.i_rest}/menu/${menuList[i].menu_pic}">
 											</div>
 								</c:forEach>
 							</c:if>

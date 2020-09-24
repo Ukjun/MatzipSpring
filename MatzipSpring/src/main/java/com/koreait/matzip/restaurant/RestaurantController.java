@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,7 @@ import com.koreait.matzip.Const;
 import com.koreait.matzip.SecurityUtils;
 import com.koreait.matzip.ViewRef;
 import com.koreait.matzip.restaurant.model.RestaurantDMI;
+import com.koreait.matzip.restaurant.model.RestaurantFile;
 import com.koreait.matzip.restaurant.model.RestaurantParam;
 import com.koreait.matzip.restaurant.model.RestaurantRecMenuVO;
 import com.koreait.matzip.user.model.UserVO;
@@ -78,6 +80,7 @@ public class RestaurantController {
 		
 		model.addAttribute("data", vo);
 		model.addAttribute("recommendMenuList",service.selRestRecMenus(param));
+		model.addAttribute("menuList",service.selRestMenus(param));
 		model.addAttribute(Const.TITLE,"등록");
 		model.addAttribute(Const.VIEW,"restaurant/restDetail");
 		
@@ -130,4 +133,15 @@ public class RestaurantController {
 		return service.ajaxDelRecMenu(vo,realPath); 
 	}
 	
+	@RequestMapping("/menus")
+	public String menus(@ModelAttribute RestaurantFile param, HttpSession hs) {
+		for(MultipartFile file : param.getMenu_pic()) {
+			System.out.println("fileNm:" + file.getOriginalFilename());
+		}
+		
+		service.insMenus(param,hs);
+		
+		
+		return "redirect:/restaurant/restDetail?i_rest=" + param.getI_rest();
+	}
 }

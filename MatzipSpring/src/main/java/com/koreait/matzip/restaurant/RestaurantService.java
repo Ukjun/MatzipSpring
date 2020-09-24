@@ -19,6 +19,7 @@ import com.koreait.matzip.FileUtils;
 import com.koreait.matzip.model.CodeVO;
 import com.koreait.matzip.model.CommonMapper;
 import com.koreait.matzip.restaurant.model.RestaurantDMI;
+import com.koreait.matzip.restaurant.model.RestaurantFile;
 import com.koreait.matzip.restaurant.model.RestaurantParam;
 import com.koreait.matzip.restaurant.model.RestaurantRecMenuVO;
 
@@ -136,6 +137,9 @@ public class RestaurantService {
 	public List<RestaurantRecMenuVO>selRestRecMenus(RestaurantParam param){
 		return mapper.selRestRecMenus(param);
 	}
+	public List<RestaurantRecMenuVO>selRestMenus(RestaurantParam param){
+		return mapper.selRestMenus(param);
+	}
 	
 	public int ajaxDelRecMenu(RestaurantParam param,String realPath) {
 		//파일 삭제
@@ -161,6 +165,39 @@ public class RestaurantService {
 			}
 		}
 		return mapper.ajaxDelRecMenu(param);
+	}
+
+	public void insMenus(RestaurantFile param,HttpSession hs) {
+		// TODO Auto-generated method stub
+		int i_rest = param.getI_rest();
+		
+		List<RestaurantRecMenuVO> list = new ArrayList();
+		
+		
+		for(MultipartFile file : param.getMenu_pic()) {
+			RestaurantRecMenuVO vo = new RestaurantRecMenuVO();
+			String path = hs.getServletContext().getRealPath("/resources/img/rest/"+ i_rest + "/menu/");
+			
+			list.add(vo);
+			if(file.isEmpty()) {return;}
+			System.out.println("진입");
+			vo.setI_rest(i_rest);
+			String originFileNm = file.getOriginalFilename();
+			String ext = FileUtils.getExt(originFileNm);
+			String saveFileNm = UUID.randomUUID() + ext;
+			
+			try {
+				file.transferTo(new File(path + saveFileNm));
+				vo.setMenu_pic(saveFileNm);
+				System.out.println("path : " + path+vo.getMenu_pic());
+				System.out.println("-----Success-----");
+			}catch(Exception e) {
+				e.printStackTrace();
+			}	
+		}
+		for(RestaurantRecMenuVO vo : list) {
+			mapper.insMenus(vo);
+		}
 	}
 	
 }
