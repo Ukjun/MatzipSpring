@@ -107,6 +107,11 @@
 								<c:forEach var="i" begin="0" end="${fn:length(menuList) > 3 ? 2 : fn:length(menuList) - 1}">
 											<div class="menuItem">
 												<img src="/res/img/rest/${data.i_rest}/menu/${menuList[i].menu_pic}">
+												<c:if test="${LoginUser.i_user == data.i_user}">
+													<div class="delIconContainer" onclick="delMenu(${menuList[i].seq})">
+														<span class= "material-icons">clear</span>
+													</div>
+												</c:if>
 											</div>
 								</c:forEach>
 							</c:if>

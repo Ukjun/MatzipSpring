@@ -69,7 +69,14 @@
 			<mapping path="/**"/>
 				<beans:bean class="com.koreait.matzip.LoginCheckInterceptor"/>
 		</interceptor>
+		
+		<interceptor>
+			<mapping path="/restaurant/*"/>
+				<beans:bean class="com.koreait.matzip.RestInterceptor"/>
+		</interceptor>
 	</interceptors>
+	
+	
 	
 	<!-- file uploads -->
 	

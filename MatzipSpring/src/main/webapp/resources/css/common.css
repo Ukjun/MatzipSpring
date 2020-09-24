@@ -203,9 +203,16 @@ a{
 }
 
 .menuList .menuItem {
+	position : relative;
 	width: 70px;
 	height: 70px;
 	color: white;
+}
+
+.menuList .menuItem .delIconContainer {
+	position: absolute;
+	top: 1px;
+	right : 1px;
 }
 
 .menuList .menuItem:not(:first-child) {

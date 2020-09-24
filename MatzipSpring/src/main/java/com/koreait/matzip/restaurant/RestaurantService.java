@@ -207,7 +207,9 @@ public class RestaurantService {
 	public int insMenus(RestaurantFile param,int i_user) {
 		// TODO Auto-generated method stub
 		int i_rest = param.getI_rest();
-
+		if(_authFail(i_rest, i_user)) {
+			return Const.FAIL;
+		}
 		List<RestaurantRecMenuVO> list = new ArrayList();
 		System.out.println("Const.realPath: " + Const.realPath);
 		String path = Const.realPath + "/resources/img/rest/"+ param.getI_rest()+ "/menu/";

@@ -17,6 +17,7 @@ public interface RestaurantMapper {
 	
 	public List<RestaurantDMI> selRestList(RestaurantParam p);
 	public RestaurantDMI detailRest(RestaurantParam p);
+	public int selRestChkUser(int param);
 	
 	// menu_pic 목록들을 띄워야되기 때문에 List로 반환
 	public List<RestaurantRecMenuVO> selRestRecMenus(RestaurantParam param);

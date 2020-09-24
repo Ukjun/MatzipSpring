@@ -14,6 +14,8 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 		
 		HttpSession hs = request.getSession();
 		UserParam loginUser = (UserParam)hs.getAttribute(Const.LOGIN_USER);
+		
+		
 		String uri = request.getRequestURI();
 		System.out.println("uri : " + uri);
 		String[] uriArr = uri.split("/");

@@ -34,11 +34,6 @@
    <select id="selRestRecMenus" parameterType="RestaurantParam" resultType="RestaurantRecMenuVO">
       SELECT A.i_rest, A.seq, A.menu_nm, A.menu_price, A.menu_pic
       FROM t_restaurant_recommend_menu A
-      <if test="i_user>0">
-      inner join t_restaurant B
-      on A.i_rest = B.i_rest
-      and B.i_user = #{i_user}
-      </if>
       WHERE A.i_rest = #{i_rest}
       <if test="seq>0">
       	and A.seq = #{seq}
@@ -48,18 +43,16 @@
    <select id="selRestMenus" parameterType="RestaurantParam" resultType="RestaurantRecMenuVO">
       SELECT A.i_rest, A.seq, A.menu_pic
       FROM t_restaurant_menu A
-      <if test="i_user>0">
-      inner join t_restaurant B
-      on A.i_rest = B.i_rest
-      and B.i_user = #{i_user}
-      </if>
       WHERE A.i_rest = #{i_rest}
       <if test="seq>0">
       	and A.seq = #{seq}
       </if>
    </select>
    
-   
+   <select id="selRestChkUser" resultType="Integer" parameterType="Integer">
+   	select i_user from t_restaurant
+   	where i_rest = #{i_rest}
+   </select>
    
    <insert id="restInsert" parameterType="RestaurantVO">
 		insert into t_restaurant

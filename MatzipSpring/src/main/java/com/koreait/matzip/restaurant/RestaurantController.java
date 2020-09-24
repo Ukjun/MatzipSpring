@@ -79,8 +79,10 @@ public class RestaurantController {
 		service.addHits(param);
 		
 		model.addAttribute("data", vo);
+		
 		model.addAttribute("recommendMenuList",service.selRestRecMenus(param));
 		model.addAttribute("menuList",service.selRestMenus(param));
+		
 		model.addAttribute(Const.TITLE,"등록");
 		model.addAttribute(Const.VIEW,"restaurant/restDetail");
 		
@@ -124,6 +126,7 @@ public class RestaurantController {
 	@RequestMapping("/ajaxDelRecMenu")
 	@ResponseBody
 	public int ajaxDelRecMenu(RestaurantParam vo,HttpSession hs) {
+		System.out.println("-----Hello???-----");
 		String path = "/resources/img/rest/" + vo.getI_rest()+"/rec_menu/";
 		String realPath = hs.getServletContext().getRealPath(path);
 		int i_user = SecurityUtils.getLoginUserPk(hs);
@@ -148,7 +151,7 @@ public class RestaurantController {
 	@RequestMapping("/menus")
 	public String menus(@ModelAttribute RestaurantFile param, HttpSession hs,RedirectAttributes ra) {
 		for(MultipartFile file : param.getMenu_pic()) {
-			System.out.println("fileNm:" + file.getOriginalFilename());
+			System.out.println("fileNm:" + file.getOriginalFilename()); 
 		}
 		int i_user = SecurityUtils.getLoginUserPk(hs);
 		service.insMenus(param,i_user);
