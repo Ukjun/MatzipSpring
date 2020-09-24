@@ -12,16 +12,21 @@ import com.koreait.matzip.restaurant.model.RestaurantVO;
 @Mapper
 public interface RestaurantMapper {
 	public int restInsert(RestaurantVO p);
+	public int insRestRecMenu(RestaurantRecMenuVO vo);
+	public int insMenus(RestaurantRecMenuVO vo);
+	
 	public List<RestaurantDMI> selRestList(RestaurantParam p);
 	public RestaurantDMI detailRest(RestaurantParam p);
+	List<RestaurantRecMenuVO> selRestRecMenus(RestaurantParam param);
+	public List<RestaurantRecMenuVO> selRestMenus(RestaurantParam param);
+	
+	
 	public int delRecRestaurant(RestaurantParam p);
 	public int delRestaurantMenu(RestaurantParam p);
 	public int delRestaurant(RestaurantParam p);
-	public int addHits(RestaurantParam p);
-	public int insRestRecMenu(RestaurantRecMenuVO vo);
-	List<RestaurantRecMenuVO> selRestRecMenus(RestaurantParam param);
 	public int ajaxDelRecMenu(RestaurantParam vo);
 	public int ajaxDelMenu(RestaurantParam vo);
-	public int insMenus(RestaurantRecMenuVO vo);
-	public List<RestaurantRecMenuVO> selRestMenus(RestaurantParam param);
+	
+	public int addHits(RestaurantParam p);
+	
 }

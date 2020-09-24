@@ -146,14 +146,15 @@ public class RestaurantController {
 	}
 	
 	@RequestMapping("/menus")
-	public String menus(@ModelAttribute RestaurantFile param, HttpSession hs) {
+	public String menus(@ModelAttribute RestaurantFile param, HttpSession hs,RedirectAttributes ra) {
 		for(MultipartFile file : param.getMenu_pic()) {
 			System.out.println("fileNm:" + file.getOriginalFilename());
 		}
+		int i_user = SecurityUtils.getLoginUserPk(hs);
+		service.insMenus(param,i_user);
+		ra.addAttribute("i_rest",param.getI_rest());
 		
-		service.insMenus(param,hs);
 		
-		
-		return "redirect:/restaurant/restDetail?i_rest=" + param.getI_rest();
+		return "redirect:/restaurant/restDetail";
 	}
 }

@@ -15,7 +15,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.Gson;
 import com.koreait.matzip.CommonUtils;
+import com.koreait.matzip.Const;
 import com.koreait.matzip.FileUtils;
+import com.koreait.matzip.SecurityUtils;
 import com.koreait.matzip.model.CodeVO;
 import com.koreait.matzip.model.CommonMapper;
 import com.koreait.matzip.restaurant.model.RestaurantDMI;
@@ -92,6 +94,10 @@ public class RestaurantService {
 	public int insRecMenu(MultipartHttpServletRequest mReq) {
 		
 		int i_rest = Integer.parseInt(mReq.getParameter("i_rest"));
+		int i_user = SecurityUtils.getLoginUserPk(mReq.getSession());
+		if(_authFail(i_rest, i_user)) {
+			return Const.FAIL;
+		}
 		List<MultipartFile> fileList = mReq.getFiles("menu_pic");
 		String[] menunmArr = mReq.getParameterValues("menu_nm");
 		String[] pricenmArr = mReq.getParameterValues("menu_price");
@@ -176,7 +182,7 @@ public class RestaurantService {
 		if(list.size()==1) {
 			RestaurantRecMenuVO item = list.get(0);
 			
-			System.out.println("realPath : " + realPath);
+			System.out.println("realPath : " + realPath+item.getMenu_pic());
 			if(item.getMenu_pic()!=null && !item.getMenu_pic().equals("")) {
 				File file = new File(realPath+item.getMenu_pic());
 				if(file.exists()) {
@@ -194,37 +200,43 @@ public class RestaurantService {
 		return mapper.ajaxDelMenu(param);
 	}
 
-	public void insMenus(RestaurantFile param,HttpSession hs) {
+	public int insMenus(RestaurantFile param,int i_user) {
 		// TODO Auto-generated method stub
 		int i_rest = param.getI_rest();
-		
+
 		List<RestaurantRecMenuVO> list = new ArrayList();
-		
-		
+		System.out.println("Const.realPath: " + Const.realPath);
+		String path = Const.realPath + "/resources/img/rest/"+ param.getI_rest()+ "/menu/";
 		for(MultipartFile file : param.getMenu_pic()) {
 			RestaurantRecMenuVO vo = new RestaurantRecMenuVO();
-			String path = hs.getServletContext().getRealPath("/resources/img/rest/"+ i_rest + "/menu/");
 			
 			list.add(vo);
-			if(file.isEmpty()) {return;}
-			System.out.println("진입");
-			vo.setI_rest(i_rest);
-			String originFileNm = file.getOriginalFilename();
-			String ext = FileUtils.getExt(originFileNm);
-			String saveFileNm = UUID.randomUUID() + ext;
 			
-			try {
-				file.transferTo(new File(path + saveFileNm));
-				vo.setMenu_pic(saveFileNm);
-				System.out.println("path : " + path+vo.getMenu_pic());
-				System.out.println("-----Success-----");
-			}catch(Exception e) {
-				e.printStackTrace();
-			}	
+			System.out.println("진입");
+			//index.jsp로 설정되어있는것을 indexController로 이동해서 설정
+			String saveFileNm = FileUtils.saveFile(path, file);
+			
+			vo.setI_rest(param.getI_rest());
+			vo.setMenu_pic(saveFileNm);
+			System.out.println("path : " + path+vo.getMenu_pic());
+			System.out.println("-----Success-----");	
 		}
 		for(RestaurantRecMenuVO vo : list) {
 			mapper.insMenus(vo);
 		}
+		return Const.SUCCESS;
+	}
+	
+	
+	private boolean _authFail(int i_rest, int i_user) {
+		RestaurantParam param = new RestaurantParam();
+		param.setI_rest(i_rest);
+		
+		RestaurantDMI dbResult = mapper.detailRest(param);
+		if(dbResult == null || dbResult.getI_user() != i_user) {
+			return true;
+		}
+		return false;
 	}
 	
 }
