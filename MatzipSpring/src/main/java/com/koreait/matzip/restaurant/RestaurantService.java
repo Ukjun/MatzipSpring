@@ -140,9 +140,13 @@ public class RestaurantService {
 		}
 	return i_rest;	
 	}
+	
+	// 추천메뉴 목록 띄우기(사진)
 	public List<RestaurantRecMenuVO>selRestRecMenus(RestaurantParam param){
 		return mapper.selRestRecMenus(param);
 	}
+	
+	// 메뉴 목록 띄우기(사진)
 	public List<RestaurantRecMenuVO>selRestMenus(RestaurantParam param){
 		return mapper.selRestMenus(param);
 	}

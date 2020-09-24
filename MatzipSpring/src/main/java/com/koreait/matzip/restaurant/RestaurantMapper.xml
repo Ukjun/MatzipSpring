@@ -29,6 +29,8 @@
 		WHERE A.i_rest = #{i_rest}
    </select>
    
+   
+   <!-- Detail안의 menu_pic 목록들을 가져오기 위한 select문  -->
    <select id="selRestRecMenus" parameterType="RestaurantParam" resultType="RestaurantRecMenuVO">
       SELECT A.i_rest, A.seq, A.menu_nm, A.menu_price, A.menu_pic
       FROM t_restaurant_recommend_menu A
@@ -56,6 +58,8 @@
       	and A.seq = #{seq}
       </if>
    </select>
+   
+   
    
    <insert id="restInsert" parameterType="RestaurantVO">
 		insert into t_restaurant
