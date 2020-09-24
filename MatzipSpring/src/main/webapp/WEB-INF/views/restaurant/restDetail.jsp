@@ -45,7 +45,8 @@
 					</div>
 					<div class="info">
 						<div class="nm">${item.menu_nm }</div>
-						<div class="price"><fmt:formatNumber type="number" value = "${item.menu_price }"></fmt:formatNumber></div>
+						<!-- formatNumber에서 원화표시를 할때 type을 currency로 한다 (화폐단위 바꾸고싶으면 location변경 필요) -->
+						<div class="price"><fmt:formatNumber type="currency" value = "${item.menu_price }"></fmt:formatNumber></div>
 					</div>
 					<c:if test="${LoginUser.i_user == data.i_user && item.menu_pic != null}">
 						<div class="delIconContainer" onclick="delRecMenu(${data.i_rest},${item.seq },'${item.menu_pic }')">
@@ -143,6 +144,7 @@
 	function addRecMenu(){
 		// Ctrl+C Ctrl+V 조심하기
 		var div = document.createElement('div');
+		div.setAttribute('id','recMenu_' + idx++)
 		
 		var inputNm = document.createElement('input');
 		inputNm.setAttribute("type","text")
@@ -151,10 +153,20 @@
 		var inputPrice = document.createElement('input');
 		inputPrice.setAttribute("type","number")
 		inputPrice.setAttribute('name','menu_price')
+		
+		inputPrice.value='0'
+		
 		var inputPic = document.createElement('input');
 		inputPic.setAttribute("type","file")
 		inputPic.setAttribute('name','menu_pic')
 		
+		var delBtn = document.createElement('input')
+		delBtn.setAttribute('type','button')
+		delBtn.setAttribute('value','X')
+		delBtn.addEventListener('click',function(){
+			div.remove();
+			console.log('idx:' + idx);
+		})
 		
 		div.append('메뉴 : ')
 		div.append(inputNm)
@@ -162,6 +174,7 @@
 		div.append(inputPrice)
 		div.append('사진 : ')
 		div.append(inputPic)
+		div.append(delBtn)
 		//div id 이름 (메뉴를 다중으로 넣기위해서 )
 		recItem.append(div)
 	}
