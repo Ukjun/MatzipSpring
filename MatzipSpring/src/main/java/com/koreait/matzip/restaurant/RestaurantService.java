@@ -180,7 +180,7 @@ public class RestaurantService {
 	// 메뉴삭제
 	public int ajaxDelMenu(RestaurantParam param) {
 		
-		if(param.getMenu_pic() != null && "".equals(param.getMenu_pic())) {
+		if(param.getMenu_pic() != null && !"".equals(param.getMenu_pic())) {
 			String path = Const.realPath + "/resources/img/rest/" + param.getI_rest() + "/menu/";
 			if(FileUtils.delFile(path+param.getMenu_pic())) {
 				return mapper.ajaxDelMenu(param);

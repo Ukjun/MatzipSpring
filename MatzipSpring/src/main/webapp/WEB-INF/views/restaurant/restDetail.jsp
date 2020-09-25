@@ -4,53 +4,69 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&display=swap"
 	rel="stylesheet">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css"
+	href="/res/css/swiper-bundle.min.css">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div id="sectionContainer">
 	<div>
 		<c:if test="${LoginUser.i_user == data.i_user}">
 			<div>
 				<a href="/restaurant/restMod"><button>수정</button></a>
 				<button onclick="isDel()">가게 삭제</button>
-				
-				<form id="recFrm" action="/restaurant/recMenus" enctype="multipart/form-data" method = "post">
-					<div><button type="button" id="menu_btn" onclick="addRecMenu()">추천 메뉴 추가</button></div>
+
+				<form id="recFrm" action="/restaurant/recMenus"
+					enctype="multipart/form-data" method="post">
+					<div>
+						<button type="button" id="menu_btn" onclick="addRecMenu()">추천
+							메뉴 추가</button>
+					</div>
 					<input type="hidden" name="i_rest" value="${data.i_rest }">
-					 <div id="recItem">
-					</div> 
-					<div><input type="submit" id="menu_sub" value = "등록"></div>
+					<div id="recItem"></div>
+					<div>
+						<input type="submit" id="menu_sub" value="등록">
+					</div>
 				</form>
 			</div>
-			
+
 			<h2>-메뉴-</h2>
 			<div>
-				<form id="menuFrm" action="/restaurant/menus" enctype="multipart/form-data" method = "post">
+				<form id="menuFrm" action="/restaurant/menus"
+					enctype="multipart/form-data" method="post">
 					<input type="hidden" name="i_rest" value="${data.i_rest }">
 					<input type="file" name="menu_pic" multiple>
 					<div id="menuItem"></div>
-					<div><input type="submit" value="등록"></div>
+					<div>
+						<input type="submit" value="등록">
+					</div>
 				</form>
 			</div>
-			
+
 		</c:if>
 		<div class="recMenuContainer">
-			<c:forEach items="${recommendMenuList }" var ="item">
+			<c:forEach items="${recommendMenuList }" var="item">
 				<div class="recMenuItem" id="recMenuItem_${item.seq }">
 					<div class="pic">
 						<c:if test="${item.menu_pic != null && item.menu_pic != ''}">
-							<img src ="/res/img/rest/${data.i_rest }/rec_menu/${item.menu_pic}" id="pic_img">
+							<img
+								src="/res/img/rest/${data.i_rest }/rec_menu/${item.menu_pic}"
+								id="pic_img">
 						</c:if>
 					</div>
 					<div class="info">
 						<div class="nm">${item.menu_nm }</div>
 						<!-- formatNumber에서 원화표시를 할때 type을 currency로 한다 (화폐단위 바꾸고싶으면 location변경 필요) -->
-						<div class="price"><fmt:formatNumber type="currency" value = "${item.menu_price }"></fmt:formatNumber></div>
+						<div class="price">
+							<fmt:formatNumber type="currency" value="${item.menu_price }"></fmt:formatNumber>
+						</div>
 					</div>
-					<c:if test="${LoginUser.i_user == data.i_user && item.menu_pic != null}">
-						<div class="delIconContainer" onclick="delRecMenu(${data.i_rest},${item.seq },'${item.menu_pic }')">
-							<span class= "material-icons">clear</span>
+					<c:if
+						test="${LoginUser.i_user == data.i_user && item.menu_pic != null}">
+						<div class="delIconContainer"
+							onclick="delRecMenu(${data.i_rest},${item.seq },'${item.menu_pic }')">
+							<span class="material-icons">clear</span>
 						</div>
 					</c:if>
 				</div>
@@ -65,9 +81,8 @@
 					</span>
 				</div>
 				<div class="status_branch_none"></div>
-				조회수 : <span class="cnt_hit">${data.hits }</span> 
-				<span class="cnt_review"></span> 
-				찜 : <span class="cnt_facvorite">${data.cnt_favorite }</span>
+				조회수 : <span class="cnt_hit">${data.hits }</span> <span
+					class="cnt_review"></span> 찜 : <span class="cnt_facvorite">${data.cnt_favorite }</span>
 
 			</div>
 			<div>
@@ -85,9 +100,7 @@
 						<tr>
 							<th>메뉴</th>
 							<td>
-							<div id="conMenuList" class="menuList">
-							
-							</div>
+								<div id="conMenuList" class="menuList"></div>
 							</td>
 						</tr>
 					</tbody>
@@ -95,7 +108,14 @@
 			</div>
 		</div>
 	</div>
+	<div id="carouselContainer">
+		<div>실제 이미지</div>
+		<div>
+			<span class="material-icons">clear</span>
+		</div>
+	</div>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 	<script>
 	var isMe = ${LoginUser.i_user == data.i_user}
 	
