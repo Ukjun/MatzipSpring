@@ -109,7 +109,7 @@
 		</div>
 	</div>
 	<div id="carouselContainer">
-		<div>실제 이미지</div>
+		<div id="imgContainer">실제 이미지</div>
 		<div>
 			<span class="material-icons">clear</span>
 		</div>
