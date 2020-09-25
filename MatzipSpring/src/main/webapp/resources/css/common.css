@@ -264,4 +264,20 @@ a{
 
 .swiper-container {
 	height: 100%;
-}ㄴ
+}
+.swiper-container
+.swiper-wrapper
+.swiper-slide{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.swiper-container
+.swiper-wrapper
+.swiper-slide
+img{
+	width : 100%;
+	overflow : hidden;
+	
+}

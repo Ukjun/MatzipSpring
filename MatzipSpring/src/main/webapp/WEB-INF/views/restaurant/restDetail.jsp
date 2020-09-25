@@ -111,11 +111,9 @@
 	<div id="carouselContainer">
 		<div id="imgContainer">
 			<div class="swiper-container">
-			<div class="swiper-wrapper">
+			<div id="swiperWrapper" class="swiper-wrapper">
 			<!-- Slides -->
-			    <div class="swiper-slide">Slide 1</div>
-			    <div class="swiper-slide">Slide 2</div>
-			    <div class="swiper-slide">Slide 3</div>
+			    
 			</div>
 			<!-- If we need pagination -->
 			<div class="swiper-pagination"></div>
@@ -139,10 +137,12 @@
 		carouselContainer.style.opacity = 0
 		carouselContainer.style.zIndex = -10
 	}
-	var mySwiper = new Swiper('.swiper-container', {
+	var mySwiper
+	
+	mySwiper = new Swiper('.swiper-container', {
 		  // Optional parameters
 		  direction: 'horizontal',
-		  loop: true,
+		  loop: false,
 
 		  // If we need pagination
 		  pagination: {
@@ -160,8 +160,6 @@
 		    el: '.swiper-scrollbar',
 		  },
 		})
-	
-	
 	var isMe = ${LoginUser.i_user == data.i_user}
 	
 	var menuList = []
@@ -179,6 +177,7 @@
 	
 	function refreshMenu(){
 		conMenuList.innerHTML =''
+		swiperWrapper.innerHTML =''
 		menuList.forEach(function(item,idx){
 			makeMenuItem(item,idx)
 		})
@@ -191,7 +190,22 @@
 		
 		const img = document.createElement('img')
 		img.setAttribute('src',`/res/img/rest/${data.i_rest}/menu/\${item.menu_pic}`)
+		img.style.cursor = 'pointer'
 		img.addEventListener('click',openCarousel)
+		
+		
+		const swiperDiv = document.createElement('div')
+		swiperDiv.setAttribute('class','swiper-slide')
+		
+		
+		const swiperImg = document.createElement('img')
+		swiperImg.setAttribute('src',`/res/img/rest/${data.i_rest}/menu/\${item.menu_pic}`)
+		
+		
+		swiperDiv.append(swiperImg)
+		
+		mySwiper.appendSlide(swiperDiv);
+		
 		div.append(img)
 		
 
