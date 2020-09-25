@@ -127,8 +127,9 @@
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 	<script>
-	function openCarousel(){
+	function openCarousel(idx){
 		/* carouselContainer.style.visibility = "visible"; */
+		mySwiper.slideTo(idx);
 		carouselContainer.style.opacity = 1
 		carouselContainer.style.zIndex = 40
 	}
@@ -142,7 +143,7 @@
 	mySwiper = new Swiper('.swiper-container', {
 		  // Optional parameters
 		  direction: 'horizontal',
-		  loop: false,
+		  loop: true,
 
 		  // If we need pagination
 		  pagination: {
@@ -153,12 +154,7 @@
 		  navigation: {
 		    nextEl: '.swiper-button-next',
 		    prevEl: '.swiper-button-prev',
-		  },
-
-		  // And if we need scrollbar
-		  scrollbar: {
-		    el: '.swiper-scrollbar',
-		  },
+		  }
 		})
 	var isMe = ${LoginUser.i_user == data.i_user}
 	
@@ -176,8 +172,10 @@
 	}
 	
 	function refreshMenu(){
+		
 		conMenuList.innerHTML =''
 		swiperWrapper.innerHTML =''
+		
 		menuList.forEach(function(item,idx){
 			makeMenuItem(item,idx)
 		})
@@ -191,7 +189,9 @@
 		const img = document.createElement('img')
 		img.setAttribute('src',`/res/img/rest/${data.i_rest}/menu/\${item.menu_pic}`)
 		img.style.cursor = 'pointer'
-		img.addEventListener('click',openCarousel)
+		img.addEventListener('click',function(){
+			openCarousel(idx+1)
+		})
 		
 		
 		const swiperDiv = document.createElement('div')
