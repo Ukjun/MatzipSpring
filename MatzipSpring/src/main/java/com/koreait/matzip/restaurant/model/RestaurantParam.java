@@ -6,6 +6,13 @@ public class RestaurantParam extends RestaurantVO{
 	private double ne_lat;
 	private double ne_lng;
 	private int seq;
+	private String menu_pic;
+	public String getMenu_pic() {
+		return menu_pic;
+	}
+	public void setMenu_pic(String menu_pic) {
+		this.menu_pic = menu_pic;
+	}
 	public int getSeq() {
 		return seq;
 	}

@@ -178,27 +178,14 @@ public class RestaurantService {
 	}
 	
 	// 메뉴삭제
-	public int ajaxDelMenu(RestaurantParam param,String realPath) {
-		//파일 삭제
-		List<RestaurantRecMenuVO> list = mapper.selRestMenus(param);
-		System.out.println("MenuList Size : " + list.size());
+	public int ajaxDelMenu(RestaurantParam param) {
 		
-		if(list.size()==1) {
-			RestaurantRecMenuVO item = list.get(0);
-			
-			System.out.println("realPath : " + realPath+item.getMenu_pic());
-			if(item.getMenu_pic()!=null && !item.getMenu_pic().equals("")) {
-				File file = new File(realPath+item.getMenu_pic());
-				if(file.exists()) {
-					if(file.delete()) {
-						System.out.println("----File Delete Success----");
-						return mapper.ajaxDelMenu(param);
-					}else {
-						System.out.println("----File Delete Fail----");
-					}
-				}else {
-					System.out.println("Not Found File");
-				}
+		if(param.getMenu_pic() != null && "".equals(param.getMenu_pic())) {
+			String path = Const.realPath + "/resources/img/rest/" + param.getI_rest() + "/menu/";
+			if(FileUtils.delFile(path+param.getMenu_pic())) {
+				return mapper.ajaxDelMenu(param);
+			}else {
+				return Const.FAIL;
 			}
 		}
 		return mapper.ajaxDelMenu(param);

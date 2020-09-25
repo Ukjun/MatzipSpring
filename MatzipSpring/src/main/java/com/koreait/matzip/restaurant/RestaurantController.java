@@ -96,6 +96,12 @@ public class RestaurantController {
 		return ViewRef.TEMP_MAP;
 	}
 	
+	@RequestMapping("/ajaxSelMenuList")
+	@ResponseBody
+	public List<RestaurantRecMenuVO> ajaxSelMenuList(RestaurantParam param) {
+		return service.selRestMenus(param);
+	}
+	
 	@RequestMapping("/del")
 	public String delRestaurant(RestaurantParam param, HttpSession hs) {
 		int loginI_user = SecurityUtils.getLoginUserPk(hs);
@@ -138,14 +144,9 @@ public class RestaurantController {
 	
 	@RequestMapping("/ajaxDelMenu")
 	@ResponseBody
-	public int ajaxDelMenu(RestaurantParam vo,HttpSession hs) {
-		String path = "/resources/img/rest/" + vo.getI_rest()+"/menu/";
-		String realPath = hs.getServletContext().getRealPath(path);
-		int i_user = SecurityUtils.getLoginUserPk(hs);
-		vo.setI_user(i_user);
+	public int ajaxDelMenu(RestaurantParam vo) { //i_rest, seq, menu_pic 을 전송
 		
-		
-		return service.ajaxDelMenu(vo,realPath); 
+		return service.ajaxDelMenu(vo);
 	}
 	
 	@RequestMapping("/menus")
