@@ -234,6 +234,7 @@ a{
 
 #carouselContainer{
    z-index : 100;
+   transition : 1s;
    top:0;
    left:0;
    position: absolute;
@@ -258,6 +259,9 @@ a{
    right: 40px;
    color: #fff;
    cursor: pointer;
-   font-size: 3rem;
-   
+   font-size: 3rem;  
 }
+
+.swiper-container {
+	height: 100%;
+}ㄴ
