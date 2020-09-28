@@ -44,11 +44,14 @@ public class RestaurantController {
 	//한글 깨짐 방지
 	@RequestMapping(value= "/ajaxGetList" , produces ="application/json; charset=UTF-8")
 	@ResponseBody
-	public List<RestaurantDMI> ajaxGetList(RestaurantParam param) {
+	public List<RestaurantDMI> ajaxGetList(RestaurantParam param, HttpSession hs) {
 		System.out.println("sw_lat: " +param.getSw_lat());
 		System.out.println("sw_lng: " +param.getSw_lng());
 		System.out.println("ne_lat: " +param.getNe_lat());
 		System.out.println("ne_lng: " +param.getNe_lng());
+		int i_user = SecurityUtils.getLoginUserPk(hs);
+		param.setI_user(i_user);
+		
 		return service.selRestList(param);
 	}
 	
@@ -77,11 +80,16 @@ public class RestaurantController {
 	
 	@RequestMapping("/restDetail")
 	public String detailRestaurant(Model model, RestaurantParam param, HttpServletRequest req) {
+		int i_user = SecurityUtils.getLoginUserPk(req);
+		param.setI_user(i_user);
+		
+		
 		RestaurantDMI vo = service.detailRest(param);
 		
 		
 		//조회수 올리기
 		service.addHits(param,req);
+		
 		
 		model.addAttribute("data", vo);
 		
@@ -92,7 +100,7 @@ public class RestaurantController {
 		
 		model.addAttribute(Const.TITLE,"등록");
 		model.addAttribute(Const.VIEW,"restaurant/restDetail");
-		
+		 
 		
 		System.out.println("i_user: "  + vo.getI_user());
 		System.out.println("i_rest: "  + vo.getI_rest());

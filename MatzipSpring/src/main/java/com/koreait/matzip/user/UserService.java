@@ -50,4 +50,17 @@ public class UserService {
 		return mapper.insUser(param);
 		
 	}
+
+	public int ajaxToggleFavorite(UserParam param) { //i_rest i_user proc_type
+		// TODO Auto-generated method stub
+		System.out.println(param.getProc_type());
+		switch(param.getProc_type()) {
+		case "ins":
+			return mapper.insFavorite(param);
+		case "del":
+			return mapper.delFavorite(param);
+		}
+		
+		return 0;
+	}
 }

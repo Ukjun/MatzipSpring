@@ -69,6 +69,20 @@ a{
 	padding : 10px;
 
 }
+.restaurant-detail {
+	padding : 5px 0 10px 0;
+}
+
+.restaurant-detail .restaurant_title_wrap .material-icons{
+	display: flex;
+	align-items: center;
+}
+
+.restaurant-detail #favorite {
+	line-height: 10px;
+}
+
+
 #sectionContainerCenter{
 	align-items: center;
 	background-image: url('img/background.jpg');

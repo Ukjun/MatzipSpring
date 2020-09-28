@@ -4,17 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.koreait.matzip.restaurant.RestaurantMapper">
 	<select id="selRestList" parameterType="RestaurantParam" resultType="RestaurantDMI">
-		SELECT i_rest, nm, lat, lng
-		FROM t_restaurant 
-		WHERE lat BETWEEN #{sw_lat} AND #{ne_lat}
-		AND lng BETWEEN #{sw_lng} AND #{ne_lng};
+		SELECT A.i_rest, A.nm, A.lat, A.lng
+		<if test="i_user>0">
+			, case when B.i_rest is null then 0 else 1 end as is_favorite
+		</if>
+		FROM t_restaurant A
+		<if test="i_user>0">
+			left join t_user_favorite B
+			on A.i_rest = B.i_rest
+			and B.i_user = #{i_user}
+		</if>
+		WHERE A.lat BETWEEN #{sw_lat} AND #{ne_lat}
+		AND A.lng BETWEEN #{sw_lng} AND #{ne_lng};
 	</select>
 	
   <select id="detailRest" parameterType="RestaurantParam" resultType = "RestaurantDMI">
 		select A.i_rest, A.nm, A.addr, A.i_user, A.hits, 
 		B.val as cd_category_nm,
 		C.nm AS user_nm, 
-		IFNULL(D.cnt,0) AS cnt_favorite
+		IFNULL(D.cnt,0) AS cnt_favorite,
+		case when E.i_rest IS NULL then 0 ELSE 1 END AS is_favorite
 		from t_restaurant A
 		inner join c_code_d B
 		on A.cd_category = B.cd
@@ -26,6 +35,9 @@
 		WHERE i_rest = #{i_rest}
 		GROUP BY i_rest) D
 		ON A.i_rest = D.i_rest
+		LEFT JOIN t_user_favorite E
+		ON A.i_rest = E.i_rest 
+		AND E.i_user = #{i_user}
 		WHERE A.i_rest = #{i_rest}
    </select>
    

@@ -13,7 +13,8 @@ import com.koreait.matzip.user.model.UserVO;
 
 public class SecurityUtils {
 	public static int getLoginUserPk(HttpServletRequest request) {
-		return getLoginUser(request).getI_user();
+		UserVO LoginUser =  (UserVO)request.getAttribute(Const.LOGIN_USER);
+		return LoginUser == null? 0: LoginUser.getI_user();
 	}
 	
 	public static int getLoginUserPk(HttpSession hs) {

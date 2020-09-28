@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.koreait.matzip.Const;
+import com.koreait.matzip.SecurityUtils;
 import com.koreait.matzip.ViewRef;
 import com.koreait.matzip.user.model.UserParam;
 import com.koreait.matzip.user.model.UserVO;
@@ -121,6 +122,17 @@ public class UserController {
 		// Session에 있는 것 모두삭제
 		hs.invalidate();
 		return "redirect:/user/login";
+	}
+	
+	@RequestMapping(value="/ajaxToggleFavorite", method = RequestMethod.GET)
+	@ResponseBody
+	public int ajaxToggleFavorite(UserParam param, HttpSession hs) {
+		System.out.println("==> ajaxToggleFavorite");
+		int i_user = SecurityUtils.getLoginUserPk(hs);
+		param.setI_user(i_user);
+		System.out.println("i_user: " + param.getI_user());
+		System.out.println("i_rest: " + param.getI_rest());
+		return service.ajaxToggleFavorite(param);
 	}
 	
 }

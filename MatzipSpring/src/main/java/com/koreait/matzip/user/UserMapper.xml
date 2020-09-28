@@ -18,4 +18,17 @@
 		where <if test="i_user>0"> i_user=#{i_user}</if>
 		<if test="user_id != null and user_id != ''">user_id=#{user_id}</if>
 	</select>
+	
+	<insert id="insFavorite" parameterType="UserParam">
+		insert into t_user_favorite
+		(i_rest, i_user)
+		values
+		(#{i_rest},#{i_user})
+	</insert>
+	
+	<delete id="delFavorite" parameterType="UserParam">
+		delete from t_user_favorite
+		where i_rest=#{i_rest}
+		and i_user = #{i_user}
+	</delete>
 </mapper>
