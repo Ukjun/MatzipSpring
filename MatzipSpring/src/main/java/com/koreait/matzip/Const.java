@@ -8,7 +8,7 @@ public class Const {
 	public static final String TITLE = "title";
 	
 	public static final String LOGIN_USER = "LoginUser";
-	
+	public static final String CURRENT_REST_READ_IP = "currentUserRestIp_";
 	
 	public static final String ERROR_TYPE = "errortype";
 	public static final String ERROR_CNT = "errorcnt";

@@ -80,7 +80,7 @@
    </insert>
 	
    <update id="addHits" parameterType="RestaurantParam" >
-   		update t_restaurant set hits = hits +1 where i_rest = #{i_rest}
+   		update t_restaurant set hits = hits +1 where i_rest = #{i_rest} and i_user != #{i_user}
    </update>
    
    <delete id="delRecRestaurant" parameterType="RestaurantParam">

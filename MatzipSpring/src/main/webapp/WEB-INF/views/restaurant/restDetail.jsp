@@ -110,10 +110,8 @@
 	</div>
 	<div id="carouselContainer">
 		<div id="imgContainer">
-			<div class="swiper-container">
+		<div class="swiper-container">
 			<div id="swiperWrapper" class="swiper-wrapper">
-			<!-- Slides -->
-			    
 			</div>
 			<!-- If we need pagination -->
 			<div class="swiper-pagination"></div>
@@ -121,12 +119,47 @@
 			<!-- If we need navigation buttons -->
 			<div class="swiper-button-prev"></div>
 			<div class="swiper-button-next"></div>
+			<c:if test="${LoginUser.i_user == data.i_user}">
+				<div class="imgDel">
+					<span class="material-icons" onclick="delMenu()">delete</span>		
+				</div>
+			</c:if>
 		</div>
-		<span class="material-icons" onclick="closeCarousel()">clear</span>
+	</div>
+	<span class="material-icons" onclick="closeCarousel()">clear</span>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 	<script>
+	function delMenu(){
+		if(!confirm('Do you want to Delete?')){return}
+		
+		const obj = menuList[mySwiper.realIndex]
+		if(obj != undefined){
+			//서버 삭제요청
+			axios.get('/restaurant/ajaxDelMenu',{
+				params: {
+					i_rest: ${data.i_rest},
+					seq : obj.seq,
+					menu_pic : obj.menu_pic
+				}
+			}).then(function(res){
+				if(res.data==1){
+					menuList.splice(mySwiper.realIndex,1)
+					refreshMenu()	
+				}else{
+					alert("Can't Delete Menu")
+				}
+			})
+		}
+		console.log('index: '+ mySwiper.activeIndex)
+		
+		
+		
+		console.log('seq:' + obj.seq)
+	}
+	
+	
 	function openCarousel(idx){
 		/* carouselContainer.style.visibility = "visible"; */
 		mySwiper.slideTo(idx);
@@ -182,6 +215,7 @@
 	}
 	
 	function makeMenuItem(item,idx){
+		//메인 화면에서 메뉴 이미지 디스플레이
 		const div = document.createElement('div')
 		div.setAttribute('class','menuItem')
 		
@@ -193,7 +227,13 @@
 			openCarousel(idx+1)
 		})
 		
+		div.append(img)
 		
+		
+		conMenuList.append(div)
+		//메뉴화면에서 디스플레이 end
+		
+		//팝업 화면에서 메뉴 이미지 디스플레이 start
 		const swiperDiv = document.createElement('div')
 		swiperDiv.setAttribute('class','swiper-slide')
 		
@@ -205,40 +245,6 @@
 		swiperDiv.append(swiperImg)
 		
 		mySwiper.appendSlide(swiperDiv);
-		
-		div.append(img)
-		
-
-		<c:if test="${LoginUser.i_user == data.i_user}">
-			const delDiv = document.createElement('div')
-			delDiv.setAttribute('class','delIconContainer')
-			delDiv.addEventListener('click',function(){
-				if(idx> -1){
-					//서버 삭제요청
-					axios.get('/restaurant/ajaxDelMenu',{
-						params: {
-							i_rest: ${data.i_rest},
-							seq : item.seq,
-							menu_pic : item.menu_pic
-						}
-					}).then(function(res){
-						if(res.data==1){
-							menuList.splice(idx,1)
-							refreshMenu()	
-						}else{
-							alert("Can't Delete Menu")
-						}
-					})
-				}
-			})
-			const span = document.createElement('span')
-			span.setAttribute('class','material-icons')
-			span.innerText='clear'
-			
-			delDiv.append(span)
-			div.append(delDiv)
-		</c:if>
-		conMenuList.append(div)
 	}
 	
 	
@@ -246,12 +252,14 @@
 	var idx = 0;
 	console.log(`${LoginUser.i_user}`)
 	console.log(`${data.i_user}`)
-		function isDel(){
-			if(confirm('Do you want Delete?')){
-				location.href = '/restaurant/del?i_rest=${data.i_rest}'
-			}
-		}
+		
 
+	function isDel(){
+		if(confirm('Do you want Delete?')){
+			location.href = '/restaurant/del?i_rest=${data.i_rest}'
+		}
+	}
+	
 	function addRecMenu(){
 		// Ctrl+C Ctrl+V 조심하기
 		var div = document.createElement('div');
@@ -313,7 +321,8 @@
 			}
 		})
 	}
-	ajaxSelMenuList()
 	addRecMenu()
+	
+	ajaxSelMenuList()
 	</script>
 </div>

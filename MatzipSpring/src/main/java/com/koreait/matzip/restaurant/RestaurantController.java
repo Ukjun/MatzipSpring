@@ -2,6 +2,8 @@ package com.koreait.matzip.restaurant;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,12 +76,17 @@ public class RestaurantController {
 	}
 	
 	@RequestMapping("/restDetail")
-	public String detailRestaurant(Model model, RestaurantParam param) {
+	public String detailRestaurant(Model model, RestaurantParam param, HttpServletRequest req) {
 		RestaurantDMI vo = service.detailRest(param);
-		service.addHits(param);
+		
+		
+		//조회수 올리기
+		service.addHits(param,req);
 		
 		model.addAttribute("data", vo);
 		
+		
+		model.addAttribute("css", new String[]{"restaurant", "swiper-bundle.min"});
 		model.addAttribute("recommendMenuList",service.selRestRecMenus(param));
 		model.addAttribute("menuList",service.selRestMenus(param));
 		

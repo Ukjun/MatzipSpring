@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +60,27 @@ public class RestaurantService {
 		return mapper.detailRest(param);
 	}
 	
-	public int addHits(RestaurantParam param) {
-		int result = mapper.addHits(param);
-		System.out.println("addHits result:" + result);
+	public int addHits(RestaurantParam param, HttpServletRequest req) {
+		String ip = req.getRemoteAddr();
+		System.out.println("ip: " + ip);
+		int result = 0;
+		int i_user = SecurityUtils.getLoginUserPk(req);
+		int i_rest = param.getI_rest();
+		System.out.println("i_rest: " + i_rest);
+		
+		ServletContext ctx = req.getServletContext();
+		String currentReadUser = (String)ctx.getAttribute(Const.CURRENT_REST_READ_IP + param.getI_rest());
+		
+		System.out.println("currendReadUser: " + currentReadUser);
+		
+		
+		if(currentReadUser == null || currentReadUser.equals(ip)) {
+			param.setI_user(i_user); // 내가 쓴 글이면 조회수 안올라가는걸로 쿼리문으로 막음
+			//조회수 처리 작업
+			result = mapper.addHits(param);
+			System.out.println("addHits result:" + result);
+			ctx.setAttribute(Const.CURRENT_REST_READ_IP+param.getI_rest(), ip);
+		}
 		
 		return result;
 	}

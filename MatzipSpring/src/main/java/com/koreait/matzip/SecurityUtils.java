@@ -17,7 +17,8 @@ public class SecurityUtils {
 	}
 	
 	public static int getLoginUserPk(HttpSession hs) {
-		return ((UserVO)hs.getAttribute(Const.LOGIN_USER)).getI_user();
+		UserVO LoginUser =  (UserVO)hs.getAttribute(Const.LOGIN_USER);
+		return LoginUser == null? 0: LoginUser.getI_user();
 	}
 	
 	public static UserVO getLoginUser(HttpServletRequest request) { // 로그인 유저 확인
