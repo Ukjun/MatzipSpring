@@ -88,7 +88,7 @@ public class RestaurantController {
 		
 		
 		//조회수 올리기
-		service.addHits(param,req);
+		//service.addHits(param,req);
 		
 		
 		model.addAttribute("data", vo);
@@ -96,12 +96,12 @@ public class RestaurantController {
 		
 		model.addAttribute("css", new String[]{"restaurant", "swiper-bundle.min"});
 		model.addAttribute("recommendMenuList",service.selRestRecMenus(param));
-		model.addAttribute("menuList",service.selRestMenus(param));
+		//model.addAttribute("menuList",service.selRestMenus(param));
 		
-		model.addAttribute(Const.TITLE,"등록");
+		model.addAttribute(Const.TITLE,vo.getNm());
 		model.addAttribute(Const.VIEW,"restaurant/restDetail");
 		 
-		
+		System.out.println("--is_favorite: " + vo.getIs_favorite());
 		System.out.println("i_user: "  + vo.getI_user());
 		System.out.println("i_rest: "  + vo.getI_rest());
 		System.out.println("addr: "  + vo.getAddr());

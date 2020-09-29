@@ -135,4 +135,12 @@ public class UserController {
 		return service.ajaxToggleFavorite(param);
 	}
 	
+	@RequestMapping("/favorite")
+	public String favorite(Model model) {
+		model.addAttribute("css",new String[] {"userfavorite"});
+		model.addAttribute(Const.TITLE,"Favorite List");
+		model.addAttribute(Const.VIEW,"user/favorite");
+		return ViewRef.TEMP_MAP;
+	}
+	
 }

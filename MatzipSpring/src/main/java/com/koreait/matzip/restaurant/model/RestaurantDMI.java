@@ -5,6 +5,8 @@ public class RestaurantDMI extends RestaurantVO{
 	private String user_nm;
 	private int cnt_favorite;
 	private int is_favorite;
+	
+	
 	public int getIs_favorite() {
 		return is_favorite;
 	}
