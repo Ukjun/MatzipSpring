@@ -136,7 +136,13 @@ public class UserController {
 	}
 	
 	@RequestMapping("/favorite")
-	public String favorite(Model model) {
+	public String favorite(Model model, HttpSession hs) {
+		int i_user = SecurityUtils.getLoginUserPk(hs);
+		UserParam param = new UserParam();
+		param.setI_user(i_user);
+		
+		model.addAttribute("data",service.selFavoriteList(param));
+		
 		model.addAttribute("css",new String[] {"userfavorite"});
 		model.addAttribute(Const.TITLE,"Favorite List");
 		model.addAttribute(Const.VIEW,"user/favorite");

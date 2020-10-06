@@ -56,3 +56,23 @@
 .f-item .ctnt .top .f-fav {
 	width: 100px;
 }
+
+.f-item .ctnt .bottom{
+	overflow-x: hidden;
+	display: flex;
+	margin-left: 30px;
+}
+.f-item .ctnt .bottom .recMenuItem{
+	width: 130px;
+}
+
+.f-item .ctnt .bottom .recMenuItem:not(:first-child) {
+	margin-left: 3px;
+}
+
+.f-item .ctnt .bottom .recMenuItem .pic{
+	width: 100%;
+}
+.f-item .ctnt .bottom .recMenuItem img{
+	width: 100%
+}

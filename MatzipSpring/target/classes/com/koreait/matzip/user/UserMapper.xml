@@ -19,6 +19,14 @@
 		<if test="user_id != null and user_id != ''">user_id=#{user_id}</if>
 	</select>
 	
+	<select id="selFavoriteList" parameterType="userParam" resultType="UserDMI">
+		select A.i_rest, A.i_user, A.r_dt, B.nm as rest_nm, B.addr as rest_addr
+		from t_user_favorite A
+		inner join t_restaurant B
+		on A.i_rest = B.i_rest
+		where i_user = #{i_user}
+	</select>
+	
 	<insert id="insFavorite" parameterType="UserParam">
 		insert into t_user_favorite
 		(i_rest, i_user)
@@ -31,4 +39,6 @@
 		where i_rest=#{i_rest}
 		and i_user = #{i_user}
 	</delete>
+	
+	
 </mapper>

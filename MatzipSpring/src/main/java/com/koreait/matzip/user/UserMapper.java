@@ -1,5 +1,7 @@
 package com.koreait.matzip.user;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.koreait.matzip.user.model.UserDMI;
@@ -13,5 +15,6 @@ public interface UserMapper {
 	
 	public int insFavorite(UserParam param);
 	public int delFavorite(UserParam param);
+	List<UserDMI> selFavoriteList(UserParam param);
 }
  
